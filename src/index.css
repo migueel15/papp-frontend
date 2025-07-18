@@ -1,68 +1,206 @@
+@import "tailwindcss";
+
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg-dark: hsl(220deg, 21%, 89%);
+  --bg: hsl(220deg, 22%, 92%);
+  --bg-light: hsl(220deg, 23%, 95%);
+  --text: hsl(234deg, 16%, 35%);
+  --text-muted: hsl(233deg, 10%, 47%);
+  --highlight: hsl(232deg, 10%, 53%);
+  --border: hsl(225deg, 14%, 77%);
+  --border-muted: hsl(223deg, 16%, 83%);
+  --primary: hsl(22deg, 99%, 52%);
+  --secondary: hsl(220deg, 91%, 54%);
+  --danger: hsl(347deg, 87%, 44%);
+  --warning: hsl(35deg, 77%, 49%);
+  --success: hsl(109deg, 58%, 40%);
+  --info: hsl(197deg, 97%, 46%);
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.dark {
+  --bg-dark: hsl(240deg, 23%, 9%);
+  --bg: hsl(240deg, 21%, 12%);
+  --bg-light: hsl(240deg, 21%, 15%);
+  --text: hsl(226deg, 64%, 88%);
+  --text-muted: hsl(228deg, 24%, 72%);
+  --highlight: hsl(228deg, 17%, 64%);
+  --border: hsl(234deg, 13%, 31%);
+  --border-muted: hsl(237deg, 16%, 23%);
+  --primary: hsl(23deg, 92%, 75%);
+  --secondary: hsl(217deg, 92%, 76%);
+  --danger: hsl(343deg, 81%, 75%);
+  --warning: hsl(41deg, 86%, 83%);
+  --success: hsl(115deg, 54%, 76%);
+  --info: hsl(189deg, 71%, 73%);
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+@theme {
+  --font-poppins: Poppins Regular;
+  --font-poppins-italic: Poppins Italic;
+  --font-poppins-thin: Poppins Thin;
+  --font-poppins-thin-italic: Poppins Thin Italic;
+  --font-poppins-extralight: Poppins ExtraLight;
+  --font-poppins-extralight-italic: Poppins ExtraLight Italic;
+  --font-poppins-light: Poppins Light;
+  --font-poppins-light-italic: Poppins Light Italic;
+  --font-poppins-medium: Poppins Medium;
+  --font-poppins-medium-italic: Poppins Medium Italic;
+  --font-poppins-semibold: Poppins SemiBold;
+  --font-poppins-semibold-italic: Poppins SemiBold Italic;
+  --font-poppins-bold: Poppins Bold;
+  --font-poppins-bold-italic: Poppins Bold Italic;
+  --font-poppins-extrabold: Poppins ExtraBold;
+  --font-poppins-extrabold-italic: Poppins ExtraBold Italic;
+  --font-poppins-black: Poppins Black;
+  --font-poppins-black-italic: Poppins Black Italic;
+
+  --color-bg-dark: var(--bg-dark);
+  --color-bg: var(--bg);
+  --color-bg-light: var(--bg-light);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-highlight: var(--highlight);
+  --color-border: var(--border);
+  --color-border-muted: var(--border-muted);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-danger: var(--danger);
+  --color-warning: var(--warning);
+  --color-success: var(--success);
+  --color-info: var(--info);
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
+@font-face {
+  font-family: "Poppins Regular";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Regular"), url("@/assets/fonts/Poppins-Regular.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Italic"), url("@/assets/fonts/Poppins-Italic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Thin";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Thin"), url("@/assets/fonts/Poppins-Thin.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Thin Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Thin Italic"),
+    url("@/assets/fonts/Poppins-ThinItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins ExtraLight";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins ExtraLight"),
+    url("@/assets/fonts/Poppins-ExtraLight.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins ExtraLight Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins ExtraLight Italic"),
+    url("@/assets/fonts/Poppins-ExtraLightItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Light";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Light"), url("@/assets/fonts/Poppins-Light.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Light Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Light Italic"),
+    url("@/assets/fonts/Poppins-LightItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Medium";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Medium"), url("@/assets/fonts/Poppins-Medium.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Medium Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Medium Italic"),
+    url("@/assets/fonts/Poppins-MediumItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins SemiBold";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins SemiBold"), url("@/assets/fonts/Poppins-SemiBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins SemiBold Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins SemiBold Italic"),
+    url("@/assets/fonts/Poppins-SemiBoldItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Bold";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Bold"), url("@/assets/fonts/Poppins-Bold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Bold Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Bold Italic"),
+    url("@/assets/fonts/Poppins-BoldItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins ExtraBold";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins ExtraBold"), url("@/assets/fonts/Poppins-ExtraBold.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins ExtraBold Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins ExtraBold Italic"),
+    url("@/assets/fonts/Poppins-ExtraBoldItalic.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Black";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Black"), url("@/assets/fonts/Poppins-Black.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Poppins Black Italic";
+  font-style: normal;
+  font-weight: normal;
+  src: local("Poppins Black Italic"),
+    url("@/assets/fonts/Poppins-BlackItalic.woff") format("woff");
 }

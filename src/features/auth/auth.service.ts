@@ -1,5 +1,4 @@
 import { useGoogleLogin } from "@react-oauth/google";
-import { useState } from "react";
 import { useNavigate } from "react-router";
 
 const BACKEND_BASE_URL =
