@@ -74,21 +74,24 @@
   font-family: "Poppins Regular";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Regular"), url("@/assets/fonts/Poppins-Regular.woff") format("woff");
+  src: local("Poppins Regular"),
+    url("@/assets/fonts/Poppins-Regular.woff") format("woff");
 }
 
 @font-face {
   font-family: "Poppins Italic";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Italic"), url("@/assets/fonts/Poppins-Italic.woff") format("woff");
+  src: local("Poppins Italic"),
+    url("@/assets/fonts/Poppins-Italic.woff") format("woff");
 }
 
 @font-face {
   font-family: "Poppins Thin";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Thin"), url("@/assets/fonts/Poppins-Thin.woff") format("woff");
+  src: local("Poppins Thin"),
+    url("@/assets/fonts/Poppins-Thin.woff") format("woff");
 }
 
 @font-face {
@@ -119,7 +122,8 @@
   font-family: "Poppins Light";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Light"), url("@/assets/fonts/Poppins-Light.woff") format("woff");
+  src: local("Poppins Light"),
+    url("@/assets/fonts/Poppins-Light.woff") format("woff");
 }
 
 @font-face {
@@ -134,7 +138,8 @@
   font-family: "Poppins Medium";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Medium"), url("@/assets/fonts/Poppins-Medium.woff") format("woff");
+  src: local("Poppins Medium"),
+    url("@/assets/fonts/Poppins-Medium.woff") format("woff");
 }
 
 @font-face {
@@ -149,7 +154,8 @@
   font-family: "Poppins SemiBold";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins SemiBold"), url("@/assets/fonts/Poppins-SemiBold.woff") format("woff");
+  src: local("Poppins SemiBold"),
+    url("@/assets/fonts/Poppins-SemiBold.woff") format("woff");
 }
 
 @font-face {
@@ -164,7 +170,8 @@
   font-family: "Poppins Bold";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Bold"), url("@/assets/fonts/Poppins-Bold.woff") format("woff");
+  src: local("Poppins Bold"),
+    url("@/assets/fonts/Poppins-Bold.woff") format("woff");
 }
 
 @font-face {
@@ -179,7 +186,8 @@
   font-family: "Poppins ExtraBold";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins ExtraBold"), url("@/assets/fonts/Poppins-ExtraBold.woff") format("woff");
+  src: local("Poppins ExtraBold"),
+    url("@/assets/fonts/Poppins-ExtraBold.woff") format("woff");
 }
 
 @font-face {
@@ -194,7 +202,8 @@
   font-family: "Poppins Black";
   font-style: normal;
   font-weight: normal;
-  src: local("Poppins Black"), url("@/assets/fonts/Poppins-Black.woff") format("woff");
+  src: local("Poppins Black"),
+    url("@/assets/fonts/Poppins-Black.woff") format("woff");
 }
 
 @font-face {
