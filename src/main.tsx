@@ -7,11 +7,12 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import Callback from "./Callback";
 import LoginPage from "@/features/auth/LoginPage";
 import ColorPaletteTest from "./ColorPaletteTest";
+import { AuthProvider } from "./features/auth/auth.context";
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 console.log("Google Client ID:", clientId);
 
-let router = createBrowserRouter([
+const router = createBrowserRouter([
   {
     path: "/",
     Component: App,
@@ -32,8 +33,10 @@ let router = createBrowserRouter([
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <GoogleOAuthProvider clientId={clientId}>
-      <RouterProvider router={router} />
-    </GoogleOAuthProvider>
+    <AuthProvider>
+      <GoogleOAuthProvider clientId={clientId}>
+        <RouterProvider router={router} />
+      </GoogleOAuthProvider>
+    </AuthProvider>
   </StrictMode>,
 );

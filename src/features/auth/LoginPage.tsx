@@ -1,6 +1,6 @@
-import useAuth from "@/features/auth/auth.service";
-import icon from "@/assets/papp.svg";
 import google from "@/assets/google.svg";
+import icon from "@/assets/papp.svg";
+import { useAuth } from "@/features/auth/auth.hook";
 
 const LoginPage = () => {
   const auth = useAuth();
@@ -27,11 +27,15 @@ const LoginPage = () => {
             disabled={true}
             placeholder="Password"
           />
-          <button className="bg-bg-light h-10 shadow-sm w-full rounded-md text-text cursor-pointer hover:bg-highlight hover:text-bg-dark transition duration-200">
+          <button
+            type="button"
+            className="bg-bg-light h-10 shadow-sm w-full rounded-md text-text cursor-pointer hover:bg-highlight hover:text-bg-dark transition duration-200"
+          >
             Log in
           </button>
         </div>
         <button
+          type="button"
           className="flex justify-center gap-2 shadow-sm bg-bg-light h-12 rounded-md mb-10 mt-5 w-full items-center cursor-pointer px-5 hover:bg-highlight text-text hover:text-bg-dark transition duration-200"
           onClick={() => auth.login()}
         >

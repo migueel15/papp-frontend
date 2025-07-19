@@ -37,7 +37,7 @@ export async function fetchAuthorized(
   }
 
   console.log("fetching with token:", token);
-  let response = await fetch(input, { ...init, headers });
+  const response = await fetch(input, { ...init, headers });
 
   if (response.status !== 401) {
     console.log("fetch successful, returning response");
@@ -56,7 +56,9 @@ export async function fetchAuthorized(
   } catch (err) {
     // Si falla el refresh, redirigimos al login
     console.error("Error refreshing token:", err);
-    window.location.href = "/auth/login";
+    if (window.location.pathname !== "/auth/login") {
+      window.location.href = "/auth/login";
+    }
     throw err;
   }
 
