@@ -8,6 +8,7 @@ import Callback from "./Callback";
 import LoginPage from "@/features/auth/LoginPage";
 import ColorPaletteTest from "./ColorPaletteTest";
 import { AuthProvider } from "./features/auth/auth.context";
+import Layout from "./layout/Layout";
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 console.log("Google Client ID:", clientId);
@@ -15,7 +16,19 @@ console.log("Google Client ID:", clientId);
 const router = createBrowserRouter([
   {
     path: "/",
-    Component: App,
+    element: (
+      <Layout>
+        <App />
+      </Layout>
+    ),
+  },
+  {
+    path: "/finance",
+    element: (
+      <Layout>
+        <App />
+      </Layout>
+    ),
   },
   {
     path: "/auth/login",

@@ -1,8 +1,17 @@
+import { useState } from "react";
 import "./App.css";
 import { useAuth } from "./features/auth/auth.hook";
+import { getAllTasks } from "./features/tasks/task.service";
 
 function App() {
   const auth = useAuth();
+  const [tasks, setTasks] = useState(null);
+
+  const getData = async () => {
+    const tasks = await getAllTasks();
+    setTasks(tasks);
+  };
+
   return (
     <>
       <div>
@@ -18,6 +27,23 @@ function App() {
         >
           LOG OUT
         </button>
+        <button
+          type="button"
+          onClick={() => {
+            getData();
+          }}
+        >
+          GET TASKS
+        </button>
+        {tasks && (
+          <ul>
+            {tasks.map((task) => (
+              <li key={task.id}>
+                {task.title} - {task.description}
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </>
   );
