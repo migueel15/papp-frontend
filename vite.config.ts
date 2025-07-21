@@ -12,12 +12,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "src"),
     },
   },
+  preview: {
+    port: 4200,
+    host: true,
+  },
   server: {
     host: true,
     port: 4200,
     cors: true,
-    watch: {
-      usePolling: true,
-    },
   },
 });
