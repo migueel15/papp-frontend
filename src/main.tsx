@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     path: "/finance",
     element: (
       <Layout>
-        <h1>Esta es la vista de finanzas</h1>
+        <h1>Esta es la vista de finanzas actualizadas</h1>
       </Layout>
     ),
   },
