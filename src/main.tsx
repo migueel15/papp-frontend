@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     path: "/finance",
     element: (
       <Layout>
-        <h1>Esta es la vista de finanzas porfiiiin</h1>
+        <h1>Esta es la vista de finanzas porfin</h1>
       </Layout>
     ),
   },
