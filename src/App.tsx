@@ -9,6 +9,7 @@ function App() {
 
   const getData = async () => {
     const tasks = await getAllTasks();
+    console.log(tasks);
     setTasks(tasks);
   };
 

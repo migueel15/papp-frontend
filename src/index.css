@@ -15,6 +15,14 @@
   --warning: hsl(35deg, 77%, 49%);
   --success: hsl(109deg, 58%, 40%);
   --info: hsl(197deg, 97%, 46%);
+
+  --card-done: hsl(109deg, 58%, 40%);
+  --card-todo: hsl(35deg, 77%, 49%);
+  --card-inprogress: hsl(220deg, 91%, 54%);
+
+  --priority-low: hsl(109deg, 58%, 40%);
+  --priority-medium: hsl(35deg, 77%, 49%);
+  --priority-high: hsl(347deg, 87%, 44%);
 }
 
 .dark {
@@ -32,6 +40,14 @@
   --warning: hsl(41deg, 86%, 83%);
   --success: hsl(115deg, 54%, 76%);
   --info: hsl(189deg, 71%, 73%);
+
+  --card-done: hsl(115deg, 54%, 76%);
+  --card-todo: hsl(41deg, 86%, 83%);
+  --card-inprogress: hsl(217deg, 92%, 76%);
+
+  --priority-low: hsl(115deg, 54%, 76%);
+  --priority-medium: hsl(41deg, 86%, 83%);
+  --priority-high: hsl(343deg, 81%, 75%);
 }
 
 @layer base {
@@ -45,6 +61,10 @@
 
   h2 {
     @apply text-xl
+  }
+
+  input {
+    @apply focus:outline-none
   }
 }
 
@@ -82,6 +102,14 @@
   --color-warning: var(--warning);
   --color-success: var(--success);
   --color-info: var(--info);
+
+  --color-card-todo: var(--card-todo);
+  --color-card-done: var(--card-done);
+  --color-card-inprogress: var(--card-inprogress);
+
+  --color-priority-low: var(--priority-low);
+  --color-priority-medium: var(--priority-medium);
+  --color-priority-high: var(--priority-high);
 }
 
 @font-face {
