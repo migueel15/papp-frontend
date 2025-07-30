@@ -1,6 +1,7 @@
 import LogoHeader from "./components/LogoHeader";
 import SideBarItem from "./components/SideBarItem";
 import HomeIcon from "@/assets/icons/home.svg?react";
+import TaskIcon from "@/assets/icons/task.svg?react";
 import FinanceIcon from "@/assets/icons/finance.svg?react";
 import UserCard from "./components/UserCard";
 
@@ -11,6 +12,7 @@ const SideBar = () => {
       <h1 className="text-text-muted mb-2">GENERAL</h1>
       <ul className="flex flex-col gap-2">
         <SideBarItem title="Dashboard" to="/" Icon={HomeIcon} />
+        <SideBarItem title="Tasks" to="/tasks" Icon={TaskIcon} />
         <SideBarItem title="Finance" to="/finance" Icon={FinanceIcon} />
         <SideBarItem title="Login" to="/auth/login" />
       </ul>
