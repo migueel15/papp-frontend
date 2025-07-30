@@ -9,6 +9,7 @@ import LoginPage from "@/features/auth/LoginPage";
 import ColorPaletteTest from "./ColorPaletteTest";
 import { AuthProvider } from "./features/auth/auth.context";
 import Layout from "./layout/Layout";
+import TaskPage from "./features/tasks/TaskPage";
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 console.log("Google Client ID:", clientId);
@@ -19,6 +20,14 @@ const router = createBrowserRouter([
     element: (
       <Layout>
         <App />
+      </Layout>
+    ),
+  },
+  {
+    path: "/tasks",
+    element: (
+      <Layout>
+        <TaskPage />
       </Layout>
     ),
   },
