@@ -34,6 +34,20 @@
   --info: hsl(189deg, 71%, 73%);
 }
 
+@layer base {
+  * {
+    @apply fill-current
+  }
+
+  h1 {
+    @apply text-2xl
+  }
+
+  h2 {
+    @apply text-xl
+  }
+}
+
 @theme {
   --font-poppins: Poppins Regular;
   --font-poppins-italic: Poppins Italic;

@@ -1,5 +1,6 @@
 import { useAuth } from "@/features/auth/auth.hook";
 import UserIcon from "@/assets/icons/user.svg?react";
+import LogoutIcon from "@/assets/icons/logout.svg?react";
 
 const UserCard = () => {
   const auth = useAuth();
@@ -29,6 +30,14 @@ const UserCard = () => {
             <p className="text-[10px] text-nowrap text-text-muted truncate">
               {auth.user?.email}
             </p>
+          </div>
+          <div
+            onClick={() => {
+              auth.logout();
+            }}
+            className="w-7 h-7 aspect-square rounded-full p-2 text-text hover:text-primary hover:cursor-pointer transition"
+          >
+            <LogoutIcon className="w-full h-full fill-current" />
           </div>
         </>
       ) : (

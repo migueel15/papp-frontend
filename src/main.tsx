@@ -51,6 +51,15 @@ const router = createBrowserRouter([
     path: "/test",
     Component: ColorPaletteTest,
   },
+
+  {
+    path: "/tasks/kanban/Servidor",
+    element: (
+      <Layout>
+        <h1>Kanban de Servidor</h1>
+      </Layout>
+    ),
+  },
 ]);
 
 createRoot(document.getElementById("root")!).render(

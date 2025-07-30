@@ -1,5 +1,9 @@
 const TaskPage = () => {
-  return <div>Esta es la vista de tareas</div>;
+  return (
+    <div>
+      <h1>Tasks</h1>
+    </div>
+  );
 };
 
 export default TaskPage;
