@@ -10,7 +10,7 @@ const SideBar = () => {
   return (
     <div className="flex flex-col sidebar w-55 bg-bg-dark drop-shadow-lg p-3">
       <LogoHeader />
-      <ul className="flex flex-col gap-2">
+      <ul className="flex flex-col gap-1">
         <SideBarItem title="Dashboard" to="/" Icon={HomeIcon} />
         <SideBarItem title="Tasks" to="/tasks" Icon={TaskIcon} />
         <SideBarItem title="Finance" to="/finance" Icon={FinanceIcon} />

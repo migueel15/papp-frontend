@@ -5,6 +5,22 @@ import Priority from "./Priority.tsx";
 import DeleteIcon from "@/assets/icons/trash.svg?react";
 import EditIcon from "@/assets/icons/edit.svg?react";
 
+import {
+  Listbox,
+  ListboxButton,
+  ListboxOption,
+  ListboxOptions,
+} from "@headlessui/react";
+import { useState } from "react";
+
+const people = [
+  { id: 1, name: "Durward Reynolds" },
+  { id: 2, name: "Kenton Towne" },
+  { id: 3, name: "Therese Wunsch" },
+  { id: 4, name: "Benedict Kessler" },
+  { id: 5, name: "Katelyn Rohan" },
+];
+
 const TasksTable = ({
   tasks,
   onDelete,
@@ -14,6 +30,7 @@ const TasksTable = ({
   onDelete: (id: Task["id"]) => void;
   onEdit: () => void;
 }) => {
+  const [selectedPerson, setSelectedPerson] = useState(people[0]);
   return (
     <div className="bg-bg-light rounded-lg drop-shadow-md overflow-hidden">
       <h2 className="p-4">All Tasks</h2>
@@ -40,7 +57,7 @@ const TasksTable = ({
                 <input type="checkbox" className="accent-primary" />
               </td>
               <td className="p-2">
-                <input type="text" value={task.title} />
+                <input type="text" defaultValue={task.title} />
               </td>
               <td className="p-2">
                 {task.dueDate
@@ -51,7 +68,30 @@ const TasksTable = ({
                   : ""}
               </td>
               <td className="p-2">
-                <Status value={task.status} />
+                <Listbox
+                  value={task.status}
+                  defaultValue={task.status}
+                  onChange={(v) => {
+                    task.status = v;
+                  }}
+                >
+                  <ListboxButton>
+                    <Status value={task.status} />
+                  </ListboxButton>
+                  <ListboxOptions anchor="bottom" className="bg-bg-dark">
+                    <ListboxOption key={"todo"} value={"todo"}>
+                      <Status value="todo" />
+                    </ListboxOption>
+
+                    <ListboxOption key={"done"} value={"done"}>
+                      <Status value="done" />
+                    </ListboxOption>
+
+                    <ListboxOption key={"inprogress"} value={"inprogress"}>
+                      <Status value="in_progress" />
+                    </ListboxOption>
+                  </ListboxOptions>
+                </Listbox>
               </td>
               <td className="p-2">
                 <Priority value={task.priority} />

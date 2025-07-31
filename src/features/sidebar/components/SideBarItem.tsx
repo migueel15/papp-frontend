@@ -3,7 +3,7 @@ import { Link } from "react-router";
 const SideBarItem = ({
   title,
   Icon,
-  size = 13,
+  size = 18,
   to,
 }: {
   Icon?: React.FunctionComponent<React.SVGProps<SVGSVGElement>>;
@@ -18,7 +18,7 @@ const SideBarItem = ({
   return (
     <Link to={to}>
       <div
-        className={`flex items-center gap-2  rounded-md px-3 py-1 hover:text-primary hover:bg-bg transition duration-150 ${isActive ? "text-primary bg-bg-light drop-shadow-md" : "text-text-muted"}`}
+        className={`flex items-center gap-2  rounded-md px-3 py-2 hover:text-primary hover:bg-bg transition duration-150 ${isActive ? "text-primary bg-bg-light drop-shadow-md" : "text-text-muted"}`}
       >
         {Icon && <Icon width={size} height={size} />}
         <span className="text-sm">{title}</span>
