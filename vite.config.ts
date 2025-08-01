@@ -13,12 +13,13 @@ export default defineConfig({
     },
   },
   preview: {
+    allowedHosts: true,
     port: 4200,
     host: true,
     cors: true,
   },
   server: {
-    allowedHosts: ["papp.dorlab.net"],
+    allowedHosts: true,
     host: true,
     port: 4200,
     cors: true,
