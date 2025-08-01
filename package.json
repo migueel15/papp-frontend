@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "echo 'Dev server' & vite",
+    "dev": "echo 'Dev serverr' & vite",
     "start": "serve -s dist -l 4200",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
