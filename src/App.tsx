@@ -32,7 +32,7 @@ function App() {
             console.log(data);
           }}
         >
-          Set cookies
+          Set cookie
         </button>
 
         <button
