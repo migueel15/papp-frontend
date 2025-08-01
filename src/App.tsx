@@ -2,6 +2,7 @@ import { useState } from "react";
 import "./App.css";
 import { useAuth } from "./features/auth/auth.hook";
 import { getAllTasks } from "./features/tasks/task.service";
+import { fetchAuthorized } from "./application/utils";
 
 function App() {
   const auth = useAuth();
@@ -19,6 +20,20 @@ function App() {
         <h1 className="text-3xl font-bold underline">
           Hello, {auth.user?.name}
         </h1>
+
+        <button
+          type="button"
+          onClick={async () => {
+            const res = await fetchAuthorized(
+              `${import.meta.env.VITE_BACKEND_BASE_URL}/auth/test`,
+              { credentials: "include" },
+            );
+            const data = await res.json();
+            console.log(data);
+          }}
+        >
+          Set cookies
+        </button>
 
         <button
           type="button"
