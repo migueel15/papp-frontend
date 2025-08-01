@@ -18,6 +18,7 @@ export default defineConfig({
     cors: true,
   },
   server: {
+    allowedHosts: ["papp.dorlab.net"],
     host: true,
     port: 4200,
     cors: true,
