@@ -246,3 +246,18 @@
   src: local("Poppins Black Italic"),
     url("@/assets/fonts/Poppins-BlackItalic.woff") format("woff");
 }
+
+body {
+  height: 100vh;
+  width: 100vw;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  max-width: 100vw;
+  max-height: 100vh;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+}

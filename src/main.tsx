@@ -10,6 +10,7 @@ import ColorPaletteTest from "./ColorPaletteTest";
 import { AuthProvider } from "./features/auth/auth.context";
 import Layout from "./layout/Layout";
 import TaskPage from "./features/tasks/TaskPage";
+import RequireAuth from "./features/auth/auth.guard";
 
 const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 console.log("Google Client ID:", clientId);
@@ -18,26 +19,24 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      <Layout>
-        <App />
-      </Layout>
+      <RequireAuth>
+        <Layout />
+      </RequireAuth>
     ),
-  },
-  {
-    path: "/tasks",
-    element: (
-      <Layout>
-        <TaskPage />
-      </Layout>
-    ),
-  },
-  {
-    path: "/finance",
-    element: (
-      <Layout>
-        <h1>Vista de finanzas!</h1>
-      </Layout>
-    ),
+    children: [
+      {
+        path: "",
+        element: <App />,
+      },
+      {
+        path: "tasks",
+        element: <TaskPage />,
+      },
+      {
+        path: "finance",
+        element: <h1>Vista de finanzas!</h1>,
+      },
+    ],
   },
   {
     path: "/auth/login",
@@ -46,19 +45,6 @@ const router = createBrowserRouter([
   {
     path: "/auth/callback/google",
     Component: Callback,
-  },
-  {
-    path: "/test",
-    Component: ColorPaletteTest,
-  },
-
-  {
-    path: "/tasks/kanban/Servidor",
-    element: (
-      <Layout>
-        <h1>Kanban de Servidor</h1>
-      </Layout>
-    ),
   },
 ]);
 

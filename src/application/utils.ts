@@ -29,28 +29,20 @@ export async function fetchAuthorized(
   input: RequestInfo,
   init: RequestInit = {},
 ): Promise<Response> {
-  console.log("getting token from localStorage");
   const token = localStorage.getItem("accessToken");
   const headers = new Headers(init.headers || {});
   if (token) {
     headers.set("Authorization", `Bearer ${token}`);
   }
-
-  console.log("fetching with token:", token);
   const response = await fetch(input, { ...init, headers });
-
   if (response.status !== 401) {
-    console.log("fetch successful, returning response");
     return response;
   }
-
   if (!refreshPromise) {
-    console.log("Token expired, refreshing...");
     refreshPromise = refreshToken().finally(() => {
       refreshPromise = null; // Reseteamos después de completado
     });
   }
-
   try {
     await refreshPromise;
   } catch (err) {

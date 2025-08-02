@@ -48,13 +48,8 @@ export const getProfile = async (): Promise<{ user: User }> => {
     console.error("Profile fetch error:", errorText);
     return;
   }
-  const data = await res.json();
+  const user = await res.json();
   return {
-    user: {
-      id: data.userId,
-      name: data.profile.name,
-      email: data.profile.email,
-      picture: data.profile.picture || undefined,
-    },
+    user,
   };
 };

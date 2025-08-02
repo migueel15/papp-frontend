@@ -12,6 +12,8 @@ export interface User {
   name: string;
   email: string;
   picture?: string;
+  isAuthorized?: boolean;
+  isAdmin?: boolean;
 }
 
 interface AuthContextType {
@@ -28,14 +30,14 @@ export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
 
   const initAuth = useCallback(async () => {
     setLoading(true);
     try {
-      const { user: profile } = await AuthService.getProfile();
-      setUser(profile);
+      const { user } = await AuthService.getProfile();
+      setUser(user);
       setIsAuthenticated(true);
     } catch (error) {
       setUser(null);

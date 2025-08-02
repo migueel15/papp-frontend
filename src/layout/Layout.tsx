@@ -2,8 +2,9 @@ import SideBar from "@/features/sidebar/SideBar";
 import HomeIcon from "@/assets/icons/home.svg?react";
 import RightArrow from "@/assets/icons/angle-small-right.svg?react";
 import { useNavigate } from "react-router";
+import { Outlet } from "react-router";
 
-const Layout = ({ children }: { children: React.ReactNode }) => {
+const Layout = ({ children }: { children?: React.ReactNode }) => {
   const url = window.location.pathname;
   const navigate = useNavigate();
   const sectionName = url.split("/").pop() || "Dashboard";
@@ -60,7 +61,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       <SideBar />
       <div className="flex flex-col flex-1 bg-bg p-5">
         {!isHome && <header className="flex mb-5">{Breadcrumbs()}</header>}
-        <div className="flex flex-1">{children}</div>
+        {children && <div className="flex flex-1">{children}</div>}
+        <Outlet />
       </div>
     </div>
   );

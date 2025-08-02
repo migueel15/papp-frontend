@@ -6,7 +6,6 @@ const UserCard = () => {
   const auth = useAuth();
   const isAuthenticated = auth.isAuthenticated;
   const userImage = auth.user?.picture;
-  console.log(userImage);
 
   return (
     <div className="flex bg-bg-light p-2 h-12 rounded-lg items-center gap-2 drop-shadow-md">
