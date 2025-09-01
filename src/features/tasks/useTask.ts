@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { Task } from "./models/task";
-import { deleteTask, getAllTasks } from "./task.service";
+import { deleteTask, getAllTasks, createTask } from "./task.service";
 
 const useTask = () => {
   const [tasks, setTasks] = useState<Task[] | null>(null);
@@ -31,11 +31,21 @@ const useTask = () => {
     }
   };
 
+  const addTask = async (taskData: Omit<Task, 'id' | 'createdAt' | 'updatedAt' | 'userId'>, userId: string) => {
+    try {
+      const newTask = await createTask(taskData, userId);
+      setTasks((prevTasks) => [...(prevTasks ?? []), newTask]);
+    } catch (error) {
+      console.error("Failed to create task:", error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     loadTasks();
   }, []);
 
-  return { tasks, isLoading, error, delTask };
+  return { tasks, isLoading, error, delTask, addTask };
 };
 
 export default useTask;

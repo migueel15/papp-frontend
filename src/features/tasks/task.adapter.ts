@@ -10,6 +10,16 @@ function normalizePriority(priority: TaskDto["priority"]): Task["priority"] {
   return priority.toLowerCase() as Task["priority"];
 }
 
+function denormalizeStatus(status: Task["status"]): TaskDto["status"] {
+  if (status === "done") return "COMPLETED";
+  if (status === "in_progress") return "IN_PROGRESS";
+  return "TODO";
+}
+
+function denormalizePriority(priority: Task["priority"]): TaskDto["priority"] {
+  return priority.toUpperCase() as TaskDto["priority"];
+}
+
 export function parseTaskFromApi(dto: TaskDto): Task {
   return {
     id: dto.id,
@@ -23,5 +33,17 @@ export function parseTaskFromApi(dto: TaskDto): Task {
     campusId: dto.campusId,
     subject: dto.subject,
     userId: dto.userId,
+  };
+}
+
+export function parseTaskToApi(task: Omit<Task, 'id' | 'createdAt' | 'updatedAt' | 'userId'>): Omit<TaskDto, 'id' | 'createdAt' | 'updatedAt' | 'userId'> {
+  return {
+    title: task.title,
+    description: task.description,
+    status: denormalizeStatus(task.status),
+    priority: denormalizePriority(task.priority),
+    dueDate: task.dueDate?.toISOString(),
+    campusId: task.campusId,
+    subject: task.subject,
   };
 }
