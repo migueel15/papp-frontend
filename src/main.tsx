@@ -34,7 +34,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: "finance",
-				element: <h1>Vista de finanzas!!!</h1>,
+				element: <h1>Vista de finanzas!</h1>,
 			},
 		],
 	},
