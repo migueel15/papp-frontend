@@ -20,10 +20,7 @@ RUN pnpm run build
 
 FROM node:20-alpine AS production
 WORKDIR /app
-RUN npm install -g pnpm
-COPY package.json pnpm-lock.yaml ./
-RUN pnpm install --prod
-
+RUN npm install -g pnpm serve
 COPY --from=build /app/dist ./dist
 EXPOSE 4200
-CMD ["pnpm", "run", "start"]
+CMD ["serve", "-s", "dist", "-l", "4200", "--single"]

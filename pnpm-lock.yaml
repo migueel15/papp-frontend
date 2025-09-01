@@ -32,6 +32,9 @@ importers:
       react-router:
         specifier: ^7.6.3
         version: 7.6.3(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      serve:
+        specifier: ^14.2.4
+        version: 14.2.4
       tailwindcss:
         specifier: ^4.1.11
         version: 4.1.11
@@ -66,9 +69,6 @@ importers:
       globals:
         specifier: ^16.3.0
         version: 16.3.0
-      serve:
-        specifier: ^14.2.4
-        version: 14.2.4
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
