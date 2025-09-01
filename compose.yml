@@ -1,13 +1,11 @@
 services:
   papp-frontend:
-    build: .
+    build:
+      context: .
+      target: production
     ports:
       - "4200:4200"
     environment:
       - NODE_ENV=production
       - VITE_GOOGLE_CLIENT_ID=${VITE_GOOGLE_CLIENT_ID}
       - VITE_BACKEND_BASE_URL=${VITE_BACKEND_BASE_URL}
-    volumes:
-      - ${HOST_PROJECT_PATH:-./}:/app
-      - /app/node_modules
-    working_dir: /app
