@@ -16,44 +16,44 @@ const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID as string;
 console.log("Google Client ID:", clientId);
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: (
-      <RequireAuth>
-        <Layout />
-      </RequireAuth>
-    ),
-    children: [
-      {
-        path: "",
-        element: <App />,
-      },
-      {
-        path: "tasks",
-        element: <TaskPage />,
-      },
-      {
-        path: "finance",
-        element: <h1>Vista de finanzas!</h1>,
-      },
-    ],
-  },
-  {
-    path: "/auth/login",
-    Component: LoginPage,
-  },
-  {
-    path: "/auth/callback/google",
-    Component: Callback,
-  },
+	{
+		path: "/",
+		element: (
+			<RequireAuth>
+				<Layout />
+			</RequireAuth>
+		),
+		children: [
+			{
+				path: "",
+				element: <App />,
+			},
+			{
+				path: "tasks",
+				element: <TaskPage />,
+			},
+			{
+				path: "finance",
+				element: <h1>Vista de finanzas!!!</h1>,
+			},
+		],
+	},
+	{
+		path: "/auth/login",
+		Component: LoginPage,
+	},
+	{
+		path: "/auth/callback/google",
+		Component: Callback,
+	},
 ]);
 
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <AuthProvider>
-      <GoogleOAuthProvider clientId={clientId}>
-        <RouterProvider router={router} />
-      </GoogleOAuthProvider>
-    </AuthProvider>
-  </StrictMode>,
+	<StrictMode>
+		<AuthProvider>
+			<GoogleOAuthProvider clientId={clientId}>
+				<RouterProvider router={router} />
+			</GoogleOAuthProvider>
+		</AuthProvider>
+	</StrictMode>,
 );
