@@ -33,9 +33,6 @@ const TaskPage = () => {
         >
           Nueva Tarea
         </button>
-        <div className="md:hidden text-sm text-text-muted">
-          Presiona el botón + para agregar una tarea
-        </div>
       </div>
       
       <TasksTable
