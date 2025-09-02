@@ -39,6 +39,7 @@ const TaskPage = () => {
         tasks={tasks.tasks}
         onDelete={tasks.delTask}
         onEdit={() => { }}
+        onStatusUpdate={tasks.updateTaskStatus}
       />
 
       {/* Modal para desktop */}

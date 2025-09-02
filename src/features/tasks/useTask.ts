@@ -67,11 +67,33 @@ const useTask = () => {
     }
   };
 
+  const updateTaskStatus = async (taskId: string, newStatus: 'todo' | 'done') => {
+    try {
+      // Optimistic update - actualizar inmediatamente en la UI
+      setTasks(prevTasks => 
+        prevTasks?.map(task => 
+          task.id === taskId 
+            ? { ...task, status: newStatus }
+            : task
+        ) ?? null
+      );
+      
+      // TODO: Llamada a la API cuando el backend lo soporte
+      // await updateTask(taskId, { status: newStatus });
+      
+    } catch (error) {
+      // En caso de error, revertir el cambio optimista
+      loadTasks();
+      console.error('Failed to update task status:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     loadTasks();
   }, []);
 
-  return { tasks: sortedTasks, isLoading, error, delTask, addTask };
+  return { tasks: sortedTasks, isLoading, error, delTask, addTask, updateTaskStatus };
 };
 
 export default useTask;
