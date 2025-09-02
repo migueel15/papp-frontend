@@ -1,11 +1,37 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import type { Task } from "./models/task";
 import { deleteTask, getAllTasks, createTask } from "./task.service";
+
+// Función para ordenar tareas por fecha y prioridad
+const sortTasks = (tasks: Task[]): Task[] => {
+  return [...tasks].sort((a, b) => {
+    // 1. Tareas con fecha van primero
+    const aHasDate = Boolean(a.dueDate);
+    const bHasDate = Boolean(b.dueDate);
+    
+    if (aHasDate && !bHasDate) return -1;
+    if (!aHasDate && bHasDate) return 1;
+    
+    // 2. Si ambas tienen fecha, ordenar por fecha (más cercana primero)
+    if (aHasDate && bHasDate) {
+      return new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime();
+    }
+    
+    // 3. Si ninguna tiene fecha, ordenar por fecha de creación (más reciente primero)
+    return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+  });
+};
 
 const useTask = () => {
   const [tasks, setTasks] = useState<Task[] | null>(null);
   const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
+
+  // Aplicar ordenamiento automáticamente usando useMemo para performance
+  const sortedTasks = useMemo(() => {
+    if (!tasks) return null;
+    return sortTasks(tasks);
+  }, [tasks]);
 
   const loadTasks = async () => {
     try {
@@ -45,7 +71,7 @@ const useTask = () => {
     loadTasks();
   }, []);
 
-  return { tasks, isLoading, error, delTask, addTask };
+  return { tasks: sortedTasks, isLoading, error, delTask, addTask };
 };
 
 export default useTask;
