@@ -55,6 +55,10 @@
     @apply fill-current
   }
 
+  body {
+    @apply bg-bg;
+  }
+
   h1 {
     @apply text-2xl
   }
