@@ -59,7 +59,7 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
   };
 
   return (
-    <div className="flex w-screen h-screen">
+    <div className="flex w-screen min-h-screen">
       {/* Botón hamburguesa - solo visible en móvil cuando sidebar está cerrado */}
       {!isSidebarOpen && (
         <button 
