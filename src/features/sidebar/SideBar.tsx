@@ -14,7 +14,7 @@ interface SideBarProps {
 const SideBar = ({ isOpen, onClose }: SideBarProps) => {
   return (
     <div className={`
-      flex flex-col sidebar w-55 bg-bg-dark drop-shadow-lg p-3 h-full
+      flex flex-col sidebar w-55 bg-bg-dark drop-shadow-lg p-3 h-full md:h-screen
       fixed md:relative z-40
       transform transition-transform duration-300 ease-in-out
       ${isOpen ? 'translate-x-0' : '-translate-x-full'}
