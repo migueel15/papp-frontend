@@ -2,9 +2,11 @@ import type { Task } from "../models/task";
 import Status from "./Status.tsx";
 import Priority from "./Priority.tsx";
 import TaskCard from "./TaskCard.tsx";
+import ConfirmDeleteModal from "./ConfirmDeleteModal.tsx";
 
 import DeleteIcon from "@/assets/icons/trash.svg?react";
 import EditIcon from "@/assets/icons/edit.svg?react";
+import { useState } from "react";
 
 import {
   Listbox,
@@ -12,7 +14,6 @@ import {
   ListboxOption,
   ListboxOptions,
 } from "@headlessui/react";
-import { useState } from "react";
 
 const people = [
   { id: 1, name: "Durward Reynolds" },
@@ -32,6 +33,30 @@ const TasksTable = ({
   onEdit: () => void;
 }) => {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
+  
+  // Estado para el modal de confirmación de eliminación
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean;
+    task: Task | null;
+  }>({ isOpen: false, task: null });
+
+  // Función para abrir modal de confirmación
+  const handleDeleteClick = (task: Task) => {
+    setDeleteModal({ isOpen: true, task });
+  };
+
+  // Función para confirmar eliminación
+  const handleDeleteConfirm = () => {
+    if (deleteModal.task) {
+      onDelete(deleteModal.task.id);
+      setDeleteModal({ isOpen: false, task: null });
+    }
+  };
+
+  // Función para cerrar modal
+  const handleDeleteCancel = () => {
+    setDeleteModal({ isOpen: false, task: null });
+  };
   return (
     <div className="bg-bg-light rounded-lg drop-shadow-md overflow-hidden">
       <h2 className="p-4">All Tasks</h2>
@@ -102,12 +127,10 @@ const TasksTable = ({
                 </td>
                 <td className="p-2">
                   <div className="flex gap-2">
-                    <EditIcon className="w-4 h-4" onClick={onEdit} />
+                    <EditIcon className="w-4 h-4 cursor-pointer hover:text-primary transition-colors" onClick={onEdit} />
                     <DeleteIcon
-                      className="w-4 h-4"
-                      onClick={() => {
-                        onDelete(task.id);
-                      }}
+                      className="w-4 h-4 cursor-pointer hover:text-danger transition-colors"
+                      onClick={() => handleDeleteClick(task)}
                     />
                   </div>
                 </td>
@@ -123,11 +146,24 @@ const TasksTable = ({
           <TaskCard
             key={task.id}
             task={task}
-            onDelete={onDelete}
+            onDelete={(taskId) => {
+              const taskToDelete = tasks.find(t => t.id === taskId);
+              if (taskToDelete) {
+                handleDeleteClick(taskToDelete);
+              }
+            }}
             onEdit={onEdit}
           />
         ))}
       </div>
+
+      {/* Modal de confirmación para eliminar tareas */}
+      <ConfirmDeleteModal
+        isOpen={deleteModal.isOpen}
+        onClose={handleDeleteCancel}
+        onConfirm={handleDeleteConfirm}
+        taskTitle={deleteModal.task?.title || ''}
+      />
     </div>
   );
 };
