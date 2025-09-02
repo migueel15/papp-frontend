@@ -2,7 +2,6 @@ import type { Task } from "../models/task";
 import Status from "./Status.tsx";
 import Priority from "./Priority.tsx";
 import TaskCard from "./TaskCard.tsx";
-import SwipeableTaskCard from "./SwipeableTaskCard.tsx";
 import ConfirmDeleteModal from "./ConfirmDeleteModal.tsx";
 
 import DeleteIcon from "@/assets/icons/trash.svg?react";
@@ -28,12 +27,10 @@ const TasksTable = ({
   tasks,
   onDelete,
   onEdit,
-  onStatusUpdate,
 }: {
   tasks: Task[];
   onDelete: (id: Task["id"]) => void;
   onEdit: () => void;
-  onStatusUpdate: (taskId: string, newStatus: 'todo' | 'done') => void;
 }) => {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
   
@@ -143,15 +140,12 @@ const TasksTable = ({
         </table>
       </div>
 
-      {/* Vista de tarjetas con swipe - solo en móvil */}
+      {/* Vista de tarjetas - solo en móvil */}
       <div className="md:hidden p-4">
         {tasks.map((task) => (
-          <SwipeableTaskCard
+          <TaskCard
             key={task.id}
             task={task}
-            onStatusChange={(taskId, newStatus) => {
-              onStatusUpdate(taskId, newStatus);
-            }}
             onDelete={(taskId) => {
               const taskToDelete = tasks.find(t => t.id === taskId);
               if (taskToDelete) {
