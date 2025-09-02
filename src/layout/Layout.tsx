@@ -3,8 +3,10 @@ import HomeIcon from "@/assets/icons/home.svg?react";
 import RightArrow from "@/assets/icons/angle-small-right.svg?react";
 import { useNavigate } from "react-router";
 import { Outlet } from "react-router";
+import { useState } from "react";
 
 const Layout = ({ children }: { children?: React.ReactNode }) => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const url = window.location.pathname;
   const navigate = useNavigate();
   const sectionName = url.split("/").pop() || "Dashboard";
@@ -58,9 +60,32 @@ const Layout = ({ children }: { children?: React.ReactNode }) => {
 
   return (
     <div className="flex w-screen h-screen">
-      <SideBar />
-      <div className="flex flex-col flex-1 bg-bg p-5">
-        {!isHome && <header className="flex mb-5">{Breadcrumbs()}</header>}
+      {/* Botón hamburguesa - solo visible en móvil cuando sidebar está cerrado */}
+      {!isSidebarOpen && (
+        <button 
+          className="md:hidden fixed top-4 left-4 z-50 p-2 bg-bg-dark rounded-md shadow-lg"
+          onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+        >
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      )}
+
+      {/* Overlay para móvil */}
+      {isSidebarOpen && (
+        <div 
+          className="md:hidden fixed inset-0 bg-transparent z-30"
+          onClick={() => setIsSidebarOpen(false)}
+        />
+      )}
+
+      <SideBar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
+      
+      <div className="flex flex-col flex-1 bg-bg p-5 md:ml-0">
+        {!isHome && <header className="flex mb-5 mt-12 md:mt-0">{Breadcrumbs()}</header>}
+        {/* Margen superior para dashboard en móvil */}
+        {isHome && <div className="mt-12 md:mt-0" />}
         {children && <div className="flex flex-1">{children}</div>}
         <Outlet />
       </div>
