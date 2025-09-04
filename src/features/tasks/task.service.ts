@@ -41,3 +41,22 @@ export const createTask = async (
 	const data = await res.json();
 	return parseTaskFromApi(data);
 };
+
+export const updateTask = async (
+	taskId: Task["id"],
+	taskData: Omit<Task, "id" | "createdAt" | "updatedAt" | "userId">,
+): Promise<Task> => {
+	const apiData = parseTaskToApi(taskData);
+	const res = await fetchAuthorized(`${BACKEND_BASE_URL}/tasks/${taskId}`, {
+		method: "PUT",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify(apiData),
+	});
+	if (!res.ok) {
+		throw Error("Failed to update task");
+	}
+	const data = await res.json();
+	return parseTaskFromApi(data);
+};

@@ -1,6 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import type { Task } from "./models/task";
-import { createTask, deleteTask, getAllTasks } from "./task.service";
+import {
+	createTask,
+	deleteTask,
+	getAllTasks,
+	updateTask,
+} from "./task.service";
 
 // Función para ordenar tareas por fecha y prioridad
 const sortTasks = (tasks: Task[]): Task[] => {
@@ -70,11 +75,28 @@ const useTask = () => {
 		}
 	};
 
+	const editTask = async (
+		taskId: Task["id"],
+		taskData: Omit<Task, "id" | "createdAt" | "updatedAt" | "userId">,
+	) => {
+		try {
+			const updatedTask = await updateTask(taskId, taskData);
+			setTasks(
+				(prevTasks) =>
+					prevTasks?.map((task) => (task.id === taskId ? updatedTask : task)) ??
+					null,
+			);
+		} catch (error) {
+			console.error("Failed to update task:", error);
+			throw error;
+		}
+	};
+
 	useEffect(() => {
 		loadTasks();
 	}, []);
 
-	return { tasks: sortedTasks, isLoading, error, delTask, addTask };
+	return { tasks: sortedTasks, isLoading, error, delTask, addTask, editTask };
 };
 
 export default useTask;

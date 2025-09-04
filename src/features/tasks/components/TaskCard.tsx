@@ -12,7 +12,10 @@ interface TaskCardProps {
 
 const TaskCard = ({ task, onDelete, onEdit }: TaskCardProps) => {
 	return (
-		<div className="bg-bg-light rounded-lg p-4 mb-3 shadow-sm border border-border-muted">
+		<div
+			className="bg-bg-light rounded-lg p-4 mb-3 shadow-sm border border-border-muted cursor-pointer hover:bg-bg-light/80 transition-colors md:cursor-default"
+			onClick={onEdit}
+		>
 			{/* Header con título y acciones */}
 			<div className="flex items-start justify-between mb-2">
 				<div className="flex items-start flex-1">
@@ -22,12 +25,18 @@ const TaskCard = ({ task, onDelete, onEdit }: TaskCardProps) => {
 				</div>
 				<div className="flex gap-2 ml-2">
 					<EditIcon
-						className="w-4 h-4 text-text-muted cursor-pointer hover:text-text"
-						onClick={onEdit}
+						className="w-4 h-4 text-text-muted cursor-pointer hover:text-text hidden md:block"
+						onClick={(e) => {
+							e.stopPropagation();
+							onEdit();
+						}}
 					/>
 					<DeleteIcon
 						className="w-4 h-4 text-text-muted cursor-pointer hover:text-danger"
-						onClick={() => onDelete(task.id)}
+						onClick={(e) => {
+							e.stopPropagation();
+							onDelete(task.id);
+						}}
 					/>
 				</div>
 			</div>

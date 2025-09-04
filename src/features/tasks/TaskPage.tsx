@@ -2,16 +2,19 @@ import { useState } from "react";
 import { useAuth } from "@/features/auth/auth.hook";
 import CreateTaskBottomSheet from "./components/CreateTaskBottomSheet";
 import CreateTaskModal from "./components/CreateTaskModal";
+import EditTaskModal from "./components/EditTaskModal";
 import FloatingActionButton from "./components/FloatingActionButton";
-import TaskCard from "./components/TaskCard";
 import TasksTable from "./components/TaskTable.tsx";
 import useKeyboardShortcut from "./hooks/useKeyboardShortcut";
 import useTask from "./useTask";
+import type { Task } from "./models/task";
 
 const TaskPage = () => {
 	const tasks = useTask();
 	const [isDesktopModalOpen, setIsDesktopModalOpen] = useState(false);
 	const [isMobileBottomSheetOpen, setIsMobileBottomSheetOpen] = useState(false);
+	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+	const [taskToEdit, setTaskToEdit] = useState<Task | undefined>(undefined);
 	const { user } = useAuth();
 
 	// Keyboard shortcut: "Q" para abrir modal de crear tarea
@@ -38,7 +41,10 @@ const TaskPage = () => {
 			<TasksTable
 				tasks={tasks.tasks}
 				onDelete={tasks.delTask}
-				onEdit={() => {}}
+				onEdit={(task) => {
+					setTaskToEdit(task);
+					setIsEditModalOpen(true);
+				}}
 			/>
 
 			{/* Modal para desktop */}
@@ -46,6 +52,21 @@ const TaskPage = () => {
 				isOpen={isDesktopModalOpen}
 				onClose={() => setIsDesktopModalOpen(false)}
 				onSubmit={(taskData) => tasks.addTask(taskData, user?.id || "")}
+			/>
+
+			{/* Modal de edición */}
+			<EditTaskModal
+				isOpen={isEditModalOpen}
+				onClose={() => {
+					setIsEditModalOpen(false);
+					setTaskToEdit(undefined);
+				}}
+				onSubmit={(taskData) => {
+					if (taskToEdit) {
+						tasks.editTask(taskToEdit.id, taskData);
+					}
+				}}
+				task={taskToEdit}
 			/>
 
 			{/* Bottom Sheet para móvil */}

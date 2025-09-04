@@ -13,14 +13,6 @@ import Priority from "./Priority.tsx";
 import Status from "./Status.tsx";
 import TaskCard from "./TaskCard.tsx";
 
-const people = [
-	{ id: 1, name: "Durward Reynolds" },
-	{ id: 2, name: "Kenton Towne" },
-	{ id: 3, name: "Therese Wunsch" },
-	{ id: 4, name: "Benedict Kessler" },
-	{ id: 5, name: "Katelyn Rohan" },
-];
-
 const TasksTable = ({
 	tasks,
 	onDelete,
@@ -28,10 +20,8 @@ const TasksTable = ({
 }: {
 	tasks: Task[];
 	onDelete: (id: Task["id"]) => void;
-	onEdit: () => void;
+	onEdit: (task: Task) => void;
 }) => {
-	const [selectedPerson, setSelectedPerson] = useState(people[0]);
-
 	// Estado para el modal de confirmación de eliminación
 	const [deleteModal, setDeleteModal] = useState<{
 		isOpen: boolean;
@@ -127,7 +117,7 @@ const TasksTable = ({
 									<div className="flex gap-2">
 										<EditIcon
 											className="w-4 h-4 cursor-pointer hover:text-primary transition-colors"
-											onClick={onEdit}
+											onClick={() => onEdit(task)}
 										/>
 										<DeleteIcon
 											className="w-4 h-4 cursor-pointer hover:text-danger transition-colors"
@@ -153,7 +143,7 @@ const TasksTable = ({
 								handleDeleteClick(taskToDelete);
 							}
 						}}
-						onEdit={onEdit}
+						onEdit={() => onEdit(task)}
 					/>
 				))}
 			</div>

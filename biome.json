@@ -12,7 +12,8 @@
 	},
 	"javascript": {
 		"formatter": {
-			"quoteStyle": "double"
+			"quoteStyle": "double",
+			"bracketSpacing": true
 		}
 	},
 	"css": {
