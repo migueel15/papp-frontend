@@ -6,6 +6,7 @@ import {
 	getAllTasks,
 	updateTask,
 } from "./task.service";
+import { useAuth } from "@/features/auth/auth.hook";
 
 // Función para ordenar tareas por fecha y prioridad
 const sortTasks = (tasks: Task[]): Task[] => {
@@ -31,12 +32,14 @@ const useTask = () => {
 	const [tasks, setTasks] = useState<Task[] | null>(null);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
+	const { user } = useAuth();
 
-	// Aplicar ordenamiento automáticamente usando useMemo para performance
+	// Aplicar filtrado por usuario y ordenamiento automáticamente usando useMemo para performance
 	const sortedTasks = useMemo(() => {
-		if (!tasks) return null;
-		return sortTasks(tasks);
-	}, [tasks]);
+		if (!tasks || !user) return null;
+		const userTasks = tasks.filter(task => task.userId === user.id);
+		return sortTasks(userTasks);
+	}, [tasks, user]);
 
 	const loadTasks = async () => {
 		try {
