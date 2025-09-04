@@ -3,6 +3,7 @@ import { useAuth } from "@/features/auth/auth.hook";
 import CreateTaskBottomSheet from "./components/CreateTaskBottomSheet";
 import CreateTaskModal from "./components/CreateTaskModal";
 import EditTaskModal from "./components/EditTaskModal";
+import EditTaskBottomSheet from "./components/EditTaskBottomSheet";
 import FloatingActionButton from "./components/FloatingActionButton";
 import TasksTable from "./components/TaskTable.tsx";
 import useKeyboardShortcut from "./hooks/useKeyboardShortcut";
@@ -14,6 +15,7 @@ const TaskPage = () => {
 	const [isDesktopModalOpen, setIsDesktopModalOpen] = useState(false);
 	const [isMobileBottomSheetOpen, setIsMobileBottomSheetOpen] = useState(false);
 	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+	const [isEditBottomSheetOpen, setIsEditBottomSheetOpen] = useState(false);
 	const [taskToEdit, setTaskToEdit] = useState<Task | undefined>(undefined);
 	const { user } = useAuth();
 
@@ -43,7 +45,12 @@ const TaskPage = () => {
 				onDelete={tasks.delTask}
 				onEdit={(task) => {
 					setTaskToEdit(task);
-					setIsEditModalOpen(true);
+					// Desktop: usar modal, Mobile: usar bottom sheet
+					if (window.innerWidth >= 768) {
+						setIsEditModalOpen(true);
+					} else {
+						setIsEditBottomSheetOpen(true);
+					}
 				}}
 			/>
 
@@ -54,11 +61,26 @@ const TaskPage = () => {
 				onSubmit={(taskData) => tasks.addTask(taskData, user?.id || "")}
 			/>
 
-			{/* Modal de edición */}
+			{/* Modal de edición para desktop */}
 			<EditTaskModal
 				isOpen={isEditModalOpen}
 				onClose={() => {
 					setIsEditModalOpen(false);
+					setTaskToEdit(undefined);
+				}}
+				onSubmit={(taskData) => {
+					if (taskToEdit) {
+						tasks.editTask(taskToEdit.id, taskData);
+					}
+				}}
+				task={taskToEdit}
+			/>
+
+			{/* Bottom Sheet de edición para móvil */}
+			<EditTaskBottomSheet
+				isOpen={isEditBottomSheetOpen}
+				onClose={() => {
+					setIsEditBottomSheetOpen(false);
 					setTaskToEdit(undefined);
 				}}
 				onSubmit={(taskData) => {
