@@ -66,7 +66,7 @@ const CreateTaskBottomSheet = ({
 			onClose={handleClose}
 			className="relative z-50 md:hidden"
 		>
-			<DialogBackdrop className="fixed inset-0 bg-black/50" />
+			<DialogBackdrop className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" />
 
 			<div className="fixed inset-x-0 bottom-0">
 				<DialogPanel className="bg-bg-light rounded-t-2xl max-h-[85vh] overflow-y-auto transform transition-transform duration-300 ease-out data-[closed]:translate-y-full">

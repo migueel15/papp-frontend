@@ -69,7 +69,7 @@ const CreateTaskModal = ({
 			className="relative z-50"
 			initialFocus={titleInputRef}
 		>
-			<DialogBackdrop className="fixed inset-0 bg-black/40 backdrop-blur-sm" />
+			<DialogBackdrop className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" />
 
 			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
 				<DialogPanel className="max-w-md w-full bg-bg-light rounded-xl p-6 shadow-2xl border border-border-muted/30">
