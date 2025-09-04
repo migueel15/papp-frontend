@@ -267,7 +267,7 @@ const EditTaskModal = ({
 									disabled={!formData.title.trim()}
 									className="flex-1 px-4 py-3 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed"
 								>
-									Guardar cambios
+									Guardar
 								</button>
 							</div>
 						</div>
