@@ -1,4 +1,4 @@
-import type { Task } from "./models/task";
+import type { Label, Task } from "./models/task";
 import type { TaskDto, TaskPriority, TaskStatus } from "./models/task.dto";
 
 function normalizeStatus(status: TaskDto["status"]): Task["status"] {
@@ -21,6 +21,14 @@ function denormalizePriority(priority: Task["priority"]): TaskDto["priority"] {
 }
 
 export function parseTaskFromApi(dto: TaskDto): Task {
+	const mappedLabels: Label[] = dto.labels.map((l) => {
+		return {
+			id: l.id,
+			name: l.name,
+			color: l.color
+		}
+	})
+
 	return {
 		id: dto.id,
 		title: dto.title,
@@ -33,12 +41,16 @@ export function parseTaskFromApi(dto: TaskDto): Task {
 		campusId: dto.campusId,
 		subject: dto.subject,
 		userId: dto.userId,
+		labels: mappedLabels
 	};
 }
 
 export function parseTaskToApi(
 	task: Omit<Task, "id" | "createdAt" | "updatedAt" | "userId">,
 ): Omit<TaskDto, "id" | "createdAt" | "updatedAt" | "userId"> {
+	const labelNames = task.labels.map((l) => {
+		return l.name
+	})
 	return {
 		title: task.title,
 		description: task.description,
@@ -47,5 +59,6 @@ export function parseTaskToApi(
 		dueDate: task.dueDate?.toISOString(),
 		campusId: task.campusId,
 		subject: task.subject,
+		labelNames: labelNames
 	};
 }

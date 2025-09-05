@@ -1,9 +1,16 @@
+export type Label = {
+	name: string
+	id: string
+	color: string
+}
+
 export type Task = {
 	id: string;
 	title: string;
 	description?: string;
 	status: "todo" | "in_progress" | "done";
 	priority: "high" | "medium" | "low";
+	labels?: Label[]
 	dueDate?: Date;
 	createdAt: Date;
 	updatedAt: Date;
@@ -11,3 +18,4 @@ export type Task = {
 	subject?: string;
 	userId: string;
 };
+
