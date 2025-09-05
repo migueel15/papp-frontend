@@ -1,9 +1,18 @@
 import google from "@/assets/google.svg";
 import icon from "@/assets/papp.svg";
 import { useAuth } from "@/features/auth/auth.hook";
+import { useEffect } from "react";
+import { useNavigate } from "react-router";
 
 const LoginPage = () => {
 	const auth = useAuth();
+	const navigate = useNavigate()
+
+	useEffect(() => {
+		if (auth.isAuthenticated) {
+			navigate("/")
+		}
+	}, [auth.isAuthenticated])
 
 	return (
 		<div className="flex justify-center items-center w-screen h-screen bg-bg-dark">
