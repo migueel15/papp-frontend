@@ -68,13 +68,14 @@ const TasksTable = ({
 						{tasks.map((task) => (
 							<tr
 								key={task.id}
-								className="bg-bg-light odd:bg-bg even:bg-bg-light"
+								onClick={() => { onEdit(task) }}
+								className="bg-bg-light odd:bg-bg even:bg-bg-light hover:cursor-pointer"
 							>
 								<td className="p-2 pl-4">
 									<input type="checkbox" className="accent-primary" />
 								</td>
 								<td className="p-2">
-									<input type="text" defaultValue={task.title} />
+									<p>{task.title}</p>
 								</td>
 								<td className="p-2">
 									{task.dueDate
