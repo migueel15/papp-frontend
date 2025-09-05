@@ -118,11 +118,16 @@ const TasksTable = ({
 									<div className="flex gap-2">
 										<EditIcon
 											className="w-4 h-4 cursor-pointer hover:text-primary transition-colors"
-											onClick={() => onEdit(task)}
+											onClick={(e) =>
+												onEdit(task)
+											}
 										/>
 										<DeleteIcon
 											className="w-4 h-4 cursor-pointer hover:text-danger transition-colors"
-											onClick={() => handleDeleteClick(task)}
+											onClick={(e) => {
+												e.stopPropagation()
+												handleDeleteClick(task)
+											}}
 										/>
 									</div>
 								</td>
