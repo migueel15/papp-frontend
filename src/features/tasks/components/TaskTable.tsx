@@ -79,9 +79,9 @@ const TasksTable = ({
 								<td className="p-2">
 									{task.dueDate
 										? task.dueDate.toLocaleString("es-ES", {
-												dateStyle: "medium",
-												timeStyle: "short",
-											})
+											dateStyle: "medium",
+											timeStyle: "short",
+										})
 										: ""}
 								</td>
 								<td className="p-2">
