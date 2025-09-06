@@ -54,14 +54,14 @@ const TasksTable = ({
 				<table className="w-full text-sm text-left table-auto">
 					<thead className="bg-bg-dark text-muted-foreground border-b-2 border-text-muted">
 						<tr className="">
-							<th className="p-2 pl-4">
+							<th className="p-2 pl-4 w-5">
 								<input type="checkbox" />
 							</th>
-							<th className="p-2 text-sm">Title</th>
-							<th className="p-2 text-sm">Due date</th>
-							<th className="p-2 text-sm">Status</th>
-							<th className="p-2 text-sm">Priority</th>
-							<th className="p-2 text-sm">Labels</th>
+							<th className="p-2 text-sm w-100">Title</th>
+							<th className="p-2 text-sm w-40">Due date</th>
+							<th className="p-2 text-sm w-30">Status</th>
+							<th className="p-2 text-sm w-30">Priority</th>
+							<th className="p-2 text-sm w-60">Labels</th>
 							<th className="p-2 text-sm"> </th>
 						</tr>
 					</thead>

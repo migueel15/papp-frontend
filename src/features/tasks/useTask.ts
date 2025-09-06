@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Label, Task, TaskSectionType } from "./models/task";
+import type { Label, Task, TaskFilter, TaskSectionType } from "./models/task";
 import {
 	createTask,
 	deleteTask,
@@ -9,17 +9,14 @@ import {
 } from "./task.service";
 import { useAuth } from "@/features/auth/auth.hook";
 
-// Función para ordenar tareas por fecha y prioridad
 const sortTasks = (tasks: Task[]): Task[] => {
 	return [...tasks].sort((a, b) => {
-		// 1. Tareas con fecha van primero
 		const aHasDate = Boolean(a.dueDate);
 		const bHasDate = Boolean(b.dueDate);
 
 		if (aHasDate && !bHasDate) return -1;
 		if (!aHasDate && bHasDate) return 1;
 
-		// 2. Si ambas tienen fecha, ordenar por fecha (más cercana primero)
 		if (aHasDate && bHasDate) {
 			return new Date(a.dueDate!).getTime() - new Date(b.dueDate!).getTime();
 		}
@@ -31,18 +28,91 @@ const sortTasks = (tasks: Task[]): Task[] => {
 
 const useTask = () => {
 	const [tasks, setTasks] = useState<Task[] | null>(null);
-	const [labels, setLabels] = useState<Label[] | null>(null)
+	const [labels, setLabels] = useState<Label[] | null>(null);
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
-	const [taskSection, setTaskSection] = useState<TaskSectionType>("overview")
+	const [taskSection, setTaskSection] = useState<TaskSectionType>("overview");
+	const [taskFilter, setTaskFilter] = useState<TaskFilter | null>(null);
 	const { user } = useAuth();
 
 	// Aplicar filtrado por usuario y ordenamiento automáticamente usando useMemo para performance
 	const sortedTasks = useMemo(() => {
 		if (!tasks || !user) return null;
-		const userTasks = tasks.filter(task => task.userId === user.id);
+		const userTasks = tasks.filter((task) => task.userId === user.id);
 		return sortTasks(userTasks);
 	}, [tasks, user]);
+
+	// Aplicar filtros adicionales a las tareas ordenadas
+	const filteredTasks = useMemo(() => {
+		if (!sortedTasks || !taskFilter) return sortedTasks;
+
+		return sortedTasks.filter((task) => {
+			// Filtrar por título (búsqueda insensible a mayúsculas)
+			if (
+				taskFilter.title &&
+				!task.title.toLowerCase().includes(taskFilter.title.toLowerCase())
+			) {
+				return false;
+			}
+
+			// Filtrar por descripción (búsqueda insensible a mayúsculas)
+			if (
+				taskFilter.description &&
+				task.description &&
+				!task.description
+					.toLowerCase()
+					.includes(taskFilter.description.toLowerCase())
+			) {
+				return false;
+			}
+
+			// Filtrar por estado (array de estados permitidos)
+			if (
+				taskFilter.status &&
+				taskFilter.status.length > 0 &&
+				!taskFilter.status.includes(task.status)
+			) {
+				return false;
+			}
+
+			// Filtrar por prioridad (array de prioridades permitidas)
+			if (
+				taskFilter.priority &&
+				taskFilter.priority.length > 0 &&
+				!taskFilter.priority.includes(task.priority)
+			) {
+				return false;
+			}
+
+			// Filtrar por etiquetas (la tarea debe tener al menos una de las etiquetas especificadas)
+			if (taskFilter.labels && taskFilter.labels.length > 0) {
+				const taskLabelNames = task.labels?.map((label) => label.name) || [];
+				const hasMatchingLabel = taskFilter.labels.some((filterLabel) =>
+					taskLabelNames.includes(filterLabel),
+				);
+				if (!hasMatchingLabel) return false;
+			}
+
+			// Filtrar por fecha de vencimiento (tareas que vencen en o antes de la fecha especificada)
+			if (taskFilter.dueDate && task.dueDate) {
+				const taskDueDate = new Date(task.dueDate);
+				const filterDueDate = new Date(taskFilter.dueDate);
+				if (taskDueDate > filterDueDate) return false;
+			}
+
+			// Filtrar por materia (array de materias permitidas)
+			if (
+				taskFilter.subject &&
+				taskFilter.subject.length > 0 &&
+				task.subject &&
+				!taskFilter.subject.includes(task.subject)
+			) {
+				return false;
+			}
+
+			return true;
+		});
+	}, [sortedTasks, taskFilter]);
 
 	const loadTasks = async () => {
 		try {
@@ -58,9 +128,9 @@ const useTask = () => {
 	};
 
 	const loadLabels = async () => {
-		const result = await getLabels()
-		setLabels(result)
-	}
+		const result = await getLabels();
+		setLabels(result);
+	};
 
 	const delTask = async (id: Task["id"]) => {
 		try {
@@ -104,16 +174,24 @@ const useTask = () => {
 	};
 
 	const updateTaskSection = (newSection: TaskSectionType) => {
-		setTaskSection(newSection)
-	}
+		setTaskSection(newSection);
+	};
+
+	const updateTaskFilter = (newFilter: TaskFilter) => {
+		setTaskFilter(newFilter);
+	};
+
+	const clearTaskFilter = () => {
+		setTaskFilter(null);
+	};
 
 	useEffect(() => {
 		loadTasks();
-		loadLabels()
+		loadLabels();
 	}, []);
 
 	return {
-		tasks: sortedTasks,
+		tasks: filteredTasks,
 		labels: labels,
 		isLoading,
 		error,
@@ -121,7 +199,10 @@ const useTask = () => {
 		delTask,
 		editTask,
 		currentTaskSection: taskSection,
-		updateTaskSection: updateTaskSection
+		updateTaskSection: updateTaskSection,
+		taskFilter,
+		updateTaskFilter,
+		clearTaskFilter,
 	};
 };
 

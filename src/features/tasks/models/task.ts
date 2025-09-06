@@ -21,3 +21,13 @@ export type Task = {
 
 export type TaskSectionType = "overview" | "upcoming" | "today" | "campus"
 export type TaskViewType = "table" | "kanban" | "calendar"
+
+export type TaskFilter = {
+	title?: string
+	description?: string
+	status?: Task["status"][]
+	priority?: Task["priority"][]
+	labels?: Label["name"][]
+	dueDate?: Date
+	subject?: Task["subject"][]
+}

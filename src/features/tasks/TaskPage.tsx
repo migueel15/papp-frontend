@@ -46,6 +46,7 @@ const TaskPage = () => {
 				<TaskHeader
 					title={tasks.currentTaskSection}
 					onCreateTask={() => setIsDesktopModalOpen(true)}
+					onFilterTask={tasks.updateTaskFilter}
 					labels={tasks.labels}
 				/>
 

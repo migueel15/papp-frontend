@@ -1,23 +1,38 @@
-import type { Label } from "../models/task"
+import type { Label, TaskFilter } from "../models/task"
 import PlusSmallIcon from "@/assets/icons/plus-small.svg?react"
+import SearchIcon from "@/assets/icons/search.svg?react"
 import useTask from "../useTask"
 
 const TaskHeader = ({
 	title,
 	onCreateTask,
+	onFilterTask,
 	labels
 }: {
 	title: string
 	onCreateTask: () => void
+	onFilterTask: (filter: TaskFilter) => void
 	labels: Label[]
 }) => {
 	return (
 		<div className="flex items-center">
 			<h2 className="p-4">{title.charAt(0).toUpperCase() + title.slice(1)}</h2>
 
+			<div className="flex items-center bg-bg rounded-md py-2 px-2 text-text-muted text-sm ml-auto mr-4 md:mr-0">
+				<SearchIcon width={15} height={15} />
+				<input
+					type="text"
+					placeholder="Search"
+					onChange={(e) => onFilterTask({
+						title: e.target.value
+					})}
+					className="w-30 md:w-50 ml-2"
+				/>
+			</div>
+
 			<button
 				onClick={onCreateTask}
-				className="ml-auto m-4 px-2 py-2 bg-primary text-bg-dark rounded-md hover:bg-primary/90 transition-colors hidden md:flex items-center justify-center text-sm"
+				className="m-4 px-2 py-2 bg-primary text-bg-dark rounded-md hover:bg-primary/90 transition-colors hidden md:flex items-center justify-center text-sm"
 			>
 				<PlusSmallIcon width={20} height={20} />
 				<p>Add new task</p>
