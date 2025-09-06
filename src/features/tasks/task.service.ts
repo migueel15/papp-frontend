@@ -1,4 +1,5 @@
 import { fetchAuthorized } from "@/application/utils";
+import type { Label } from "./models/task.ts";
 import type { Task } from "@/features/tasks/models/task";
 import {
 	parseTaskFromApi,
@@ -60,3 +61,17 @@ export const updateTask = async (
 	const data = await res.json();
 	return parseTaskFromApi(data);
 };
+
+export const getLabels = async (): Promise<Label[]> => {
+	const res = await fetchAuthorized(`${BACKEND_BASE_URL}/labels`)
+	const data: Label[] = await res.json()
+
+	const formatedData: Label[] = data.map((l) => {
+		return {
+			id: l.id,
+			name: l.name,
+			color: l.color
+		}
+	})
+	return formatedData
+}

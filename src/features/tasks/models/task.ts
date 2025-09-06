@@ -19,3 +19,5 @@ export type Task = {
 	userId: string;
 };
 
+export type TaskSectionType = "overview" | "upcoming" | "today" | "campus"
+export type TaskViewType = "table" | "kanban" | "calendar"

@@ -12,6 +12,7 @@ import ConfirmDeleteModal from "./ConfirmDeleteModal.tsx";
 import Priority from "./Priority.tsx";
 import Status from "./Status.tsx";
 import TaskCard from "./TaskCard.tsx";
+import Labels from "./Labels.tsx";
 
 const TasksTable = ({
 	tasks,
@@ -46,8 +47,7 @@ const TasksTable = ({
 		setDeleteModal({ isOpen: false, task: null });
 	};
 	return (
-		<div className="bg-bg-light rounded-lg drop-shadow-md overflow-hidden">
-			<h2 className="p-4">All Tasks</h2>
+		<div>
 
 			{/* Vista de tabla - solo en desktop */}
 			<div className="hidden md:block">
@@ -61,6 +61,7 @@ const TasksTable = ({
 							<th className="p-2 text-sm">Due date</th>
 							<th className="p-2 text-sm">Status</th>
 							<th className="p-2 text-sm">Priority</th>
+							<th className="p-2 text-sm">Labels</th>
 							<th className="p-2 text-sm"> </th>
 						</tr>
 					</thead>
@@ -113,6 +114,10 @@ const TasksTable = ({
 								</td>
 								<td className="p-2">
 									<Priority value={task.priority} />
+								</td>
+
+								<td className="p-2">
+									<Labels labels={task.labels} />
 								</td>
 								<td className="p-2">
 									<div className="flex gap-2">

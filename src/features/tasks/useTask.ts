@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import type { Task } from "./models/task";
+import type { Label, Task, TaskSectionType } from "./models/task";
 import {
 	createTask,
 	deleteTask,
 	getAllTasks,
+	getLabels,
 	updateTask,
 } from "./task.service";
 import { useAuth } from "@/features/auth/auth.hook";
@@ -30,8 +31,10 @@ const sortTasks = (tasks: Task[]): Task[] => {
 
 const useTask = () => {
 	const [tasks, setTasks] = useState<Task[] | null>(null);
+	const [labels, setLabels] = useState<Label[] | null>(null)
 	const [isLoading, setLoading] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
+	const [taskSection, setTaskSection] = useState<TaskSectionType>("overview")
 	const { user } = useAuth();
 
 	// Aplicar filtrado por usuario y ordenamiento automáticamente usando useMemo para performance
@@ -53,6 +56,11 @@ const useTask = () => {
 			setLoading(false);
 		}
 	};
+
+	const loadLabels = async () => {
+		const result = await getLabels()
+		setLabels(result)
+	}
 
 	const delTask = async (id: Task["id"]) => {
 		try {
@@ -95,11 +103,26 @@ const useTask = () => {
 		}
 	};
 
+	const updateTaskSection = (newSection: TaskSectionType) => {
+		setTaskSection(newSection)
+	}
+
 	useEffect(() => {
 		loadTasks();
+		loadLabels()
 	}, []);
 
-	return { tasks: sortedTasks, isLoading, error, delTask, addTask, editTask };
+	return {
+		tasks: sortedTasks,
+		labels: labels,
+		isLoading,
+		error,
+		addTask,
+		delTask,
+		editTask,
+		currentTaskSection: taskSection,
+		updateTaskSection: updateTaskSection
+	};
 };
 
 export default useTask;

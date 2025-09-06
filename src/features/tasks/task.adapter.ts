@@ -48,7 +48,7 @@ export function parseTaskFromApi(dto: TaskDto): Task {
 export function parseTaskToApi(
 	task: Omit<Task, "id" | "createdAt" | "updatedAt" | "userId">,
 ): Omit<TaskDto, "id" | "createdAt" | "updatedAt" | "userId"> {
-	const labelNames = task.labels.map((l) => {
+	const labelNames = task.labels?.map((l) => {
 		return l.name
 	})
 	return {

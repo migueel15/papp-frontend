@@ -9,6 +9,8 @@ import TasksTable from "./components/TaskTable.tsx";
 import useKeyboardShortcut from "./hooks/useKeyboardShortcut";
 import useTask from "./useTask";
 import type { Task } from "./models/task";
+import TaskSectionSelector from "./components/TaskSectionSelector.tsx";
+import TaskHeader from "./components/TaskHeader.tsx";
 
 const TaskPage = () => {
 	const tasks = useTask();
@@ -32,35 +34,36 @@ const TaskPage = () => {
 		<div className="w-full">
 			<div className="flex justify-between items-center mb-6">
 				<h1 className="text-2xl font-bold">Tasks</h1>
-				<button
-					onClick={() => setIsDesktopModalOpen(true)}
-					className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors hidden md:block"
-				>
-					New task
-				</button>
 			</div>
 
-			<div className="flex gap-3">
-				<p>All Tasks</p>
-				<p>All Upcoming</p>
-				<p>Due Today</p>
-				<p>Campus</p>
-				<p>Overdue</p>
-			</div>
-
-			<TasksTable
-				tasks={tasks.tasks}
-				onDelete={tasks.delTask}
-				onEdit={(task) => {
-					setTaskToEdit(task);
-					// Desktop: usar modal, Mobile: usar bottom sheet
-					if (window.innerWidth >= 768) {
-						setIsEditModalOpen(true);
-					} else {
-						setIsEditBottomSheetOpen(true);
-					}
-				}}
+			<TaskSectionSelector
+				currentSection={tasks.currentTaskSection}
+				updateSection={tasks.updateTaskSection}
 			/>
+
+
+			<div className="bg-bg-light rounded-lg drop-shadow-md overflow-hidden">
+				<TaskHeader
+					title={tasks.currentTaskSection}
+					onCreateTask={() => setIsDesktopModalOpen(true)}
+					labels={tasks.labels}
+				/>
+
+				<TasksTable
+					tasks={tasks.tasks}
+					onDelete={tasks.delTask}
+					onEdit={(task) => {
+						setTaskToEdit(task);
+						// Desktop: usar modal, Mobile: usar bottom sheet
+						if (window.innerWidth >= 768) {
+							setIsEditModalOpen(true);
+						} else {
+							setIsEditBottomSheetOpen(true);
+						}
+					}}
+				/>
+			</div>
+
 
 			{/* Modal para desktop */}
 			<CreateTaskModal
