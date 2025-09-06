@@ -1,6 +1,7 @@
 import type { Label, TaskFilter } from "../models/task";
 import PlusSmallIcon from "@/assets/icons/plus-small.svg?react";
 import TaskSearchBar from "./TaskSearchBar";
+import TaskFilterModal from "./TaskFilter";
 
 const TaskHeader = ({
 	title,
@@ -18,7 +19,11 @@ const TaskHeader = ({
 		<div className="flex items-center">
 			<h2 className="p-4">{title.charAt(0).toUpperCase() + title.slice(1)}</h2>
 
-			<TaskSearchBar onFilterTask={onFilterTask} />
+
+			<div className="flex ml-auto gap-3 items-center">
+				<TaskFilterModal onFilterUpdate={onFilterTask} />
+				<TaskSearchBar onFilterTask={onFilterTask} />
+			</div>
 
 			<button
 				onClick={onCreateTask}

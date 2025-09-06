@@ -31,3 +31,8 @@ export type TaskFilter = {
 	dueDate?: Date
 	subject?: Task["subject"][]
 }
+export const status = [
+	{ name: "Todo", value: "todo" },
+	{ name: "In progress", value: "in_progress" },
+	{ name: "Done", value: "done" },
+]
