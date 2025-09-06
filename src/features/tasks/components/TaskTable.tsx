@@ -62,7 +62,7 @@ const TasksTable = ({
 							<th className="p-2 text-sm w-30">Status</th>
 							<th className="p-2 text-sm w-30">Priority</th>
 							<th className="p-2 text-sm w-60">Labels</th>
-							<th className="p-2 text-sm"> </th>
+							<th className="p-2 text-sm w-10"> </th>
 						</tr>
 					</thead>
 					<tbody>
