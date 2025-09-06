@@ -178,7 +178,7 @@ const useTask = () => {
 	};
 
 	const updateTaskFilter = (newFilter: TaskFilter) => {
-		setTaskFilter(newFilter);
+		setTaskFilter((prev) => ({ ...prev, ...newFilter }));
 	};
 
 	const clearTaskFilter = () => {
@@ -188,6 +188,7 @@ const useTask = () => {
 	useEffect(() => {
 		loadTasks();
 		loadLabels();
+
 	}, []);
 
 	return {

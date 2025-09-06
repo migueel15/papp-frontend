@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/features/auth/auth.hook";
 import CreateTaskBottomSheet from "./components/CreateTaskBottomSheet";
 import CreateTaskModal from "./components/CreateTaskModal";
@@ -29,6 +29,7 @@ const TaskPage = () => {
 
 	if (tasks.isLoading) return <h1>Loading...</h1>;
 	if (tasks.error) return <h1>Error</h1>;
+
 
 	return (
 		<div className="w-full">

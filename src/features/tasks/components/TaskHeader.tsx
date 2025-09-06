@@ -1,34 +1,24 @@
-import type { Label, TaskFilter } from "../models/task"
-import PlusSmallIcon from "@/assets/icons/plus-small.svg?react"
-import SearchIcon from "@/assets/icons/search.svg?react"
-import useTask from "../useTask"
+import type { Label, TaskFilter } from "../models/task";
+import PlusSmallIcon from "@/assets/icons/plus-small.svg?react";
+import TaskSearchBar from "./TaskSearchBar";
 
 const TaskHeader = ({
 	title,
 	onCreateTask,
 	onFilterTask,
-	labels
+	labels,
 }: {
-	title: string
-	onCreateTask: () => void
-	onFilterTask: (filter: TaskFilter) => void
-	labels: Label[]
+	title: string;
+	onCreateTask: () => void;
+	onFilterTask: (filter: TaskFilter) => void;
+	labels: Label[];
 }) => {
+
 	return (
 		<div className="flex items-center">
 			<h2 className="p-4">{title.charAt(0).toUpperCase() + title.slice(1)}</h2>
 
-			<div className="flex items-center bg-bg rounded-md py-2 px-2 text-text-muted text-sm ml-auto mr-4 md:mr-0">
-				<SearchIcon width={15} height={15} />
-				<input
-					type="text"
-					placeholder="Search"
-					onChange={(e) => onFilterTask({
-						title: e.target.value
-					})}
-					className="w-30 md:w-50 ml-2"
-				/>
-			</div>
+			<TaskSearchBar onFilterTask={onFilterTask} />
 
 			<button
 				onClick={onCreateTask}
@@ -37,10 +27,8 @@ const TaskHeader = ({
 				<PlusSmallIcon width={20} height={20} />
 				<p>Add new task</p>
 			</button>
-
-
 		</div>
-	)
-}
+	);
+};
 
-export default TaskHeader
+export default TaskHeader;
