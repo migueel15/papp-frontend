@@ -21,7 +21,7 @@ const TaskHeader = ({
 
 
 			<div className="flex ml-auto gap-3 items-center">
-				<TaskFilterModal onFilterUpdate={onFilterTask} />
+				<TaskFilterModal onFilterUpdate={onFilterTask} labels={labels} />
 				<TaskSearchBar onFilterTask={onFilterTask} />
 			</div>
 

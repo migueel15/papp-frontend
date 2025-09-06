@@ -174,6 +174,25 @@ const useTask = () => {
 	};
 
 	const updateTaskSection = (newSection: TaskSectionType) => {
+
+		clearTaskFilter()
+
+		if (newSection === "campus") {
+			clearTaskFilter()
+			updateTaskFilter({ labels: ["campus"] })
+		}
+
+		if (newSection === "overview") {
+		}
+
+		if (newSection === "today") {
+			const today = new Date()
+			today.setHours(23, 59, 59)
+			updateTaskFilter({
+				dueDate: today
+			})
+		}
+
 		setTaskSection(newSection);
 	};
 
