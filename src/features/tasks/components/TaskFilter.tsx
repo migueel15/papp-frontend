@@ -102,7 +102,7 @@ const TaskFilterModal = ({
 							Filter by Label
 						</summary>
 
-						{labels.map((l) => (
+						{labels && labels.map((l) => (
 							<button
 								key={l.id}
 								onClick={() => toggleLabels(l)}
