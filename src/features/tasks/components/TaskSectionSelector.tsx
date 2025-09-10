@@ -20,11 +20,11 @@ const TaskSectionSelector = ({
 			</div>
 
 			<div className="md:hidden mb-2">
-				<Select name="status">
-					<option value="overview" onClick={() => updateSection("overview")}>Overview</option>
-					<option value="upcoming" onClick={() => updateSection("upcoming")}>Upcoming</option>
-					<option value="today" onClick={() => updateSection("today")}>Today</option>
-					<option value="campus" onClick={() => updateSection("campus")}>Campus</option>
+				<Select name="status" onChange={(e) => updateSection(e.target.value as TaskSectionType)} className="outline-none">
+					<option value="overview">Overview</option>
+					<option value="upcoming">Upcoming</option>
+					<option value="today" >Today</option>
+					<option value="campus" >Campus</option>
 				</Select>
 			</div>
 
