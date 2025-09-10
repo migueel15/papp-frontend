@@ -4,22 +4,36 @@ import {
 	DialogPanel,
 	DialogTitle,
 } from "@headlessui/react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { Task } from "../models/task";
+
+const formatDateTimeForInput = (date: Date): string => {
+	const year = date.getFullYear();
+	const month = String(date.getMonth() + 1).padStart(2, "0");
+	const day = String(date.getDate()).padStart(2, "0");
+	const hours = String(date.getHours()).padStart(2, "0");
+	const minutes = String(date.getMinutes()).padStart(2, "0");
+	return `${year}-${month}-${day}T${hours}:${minutes}`;
+};
 
 interface CreateTaskModalProps {
 	isOpen: boolean;
+	isMobile: boolean;
+	task: Task;
 	onClose: () => void;
 	onSubmit: (
 		taskData: Omit<Task, "id" | "createdAt" | "updatedAt" | "userId">,
 	) => void;
 }
 
-const CreateTaskModal = ({
+const TaskModal = ({
 	isOpen,
+	isMobile = false,
+	task,
 	onClose,
 	onSubmit,
 }: CreateTaskModalProps) => {
+
 	const [formData, setFormData] = useState({
 		title: "",
 		description: "",
@@ -29,6 +43,20 @@ const CreateTaskModal = ({
 		campusId: "",
 		subject: "",
 	});
+
+	useEffect(() => {
+		if (task && isOpen) {
+			setFormData({
+				title: task.title,
+				description: task.description || "",
+				status: task.status,
+				priority: task.priority,
+				dueDate: task.dueDate ? formatDateTimeForInput(task.dueDate) : "",
+				campusId: task.campusId || "",
+				subject: task.subject || "",
+			});
+		}
+	}, [task, isOpen]);
 
 	const titleInputRef = useRef<HTMLInputElement>(null);
 
@@ -71,12 +99,11 @@ const CreateTaskModal = ({
 		>
 			<DialogBackdrop className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" />
 
-			<div className="fixed inset-0 flex w-screen items-center justify-center p-4">
+			<div className={`fixed flex w-screen items-center justify-center p-4 ${isMobile ? "inset-x-0 bottom-0" : "inset-0"}`}>
 				<DialogPanel className="max-w-md w-full bg-bg-light rounded-xl p-6 shadow-2xl border border-border-muted/30">
-					{/* Header limpio */}
 					<div className="flex items-center justify-between mb-6">
 						<DialogTitle className="text-lg font-semibold text-text">
-							Nueva tarea
+							{task ? "Editar tarea" : "Nueva tarea"}
 						</DialogTitle>
 						<button
 							onClick={handleClose}
@@ -99,7 +126,6 @@ const CreateTaskModal = ({
 					</div>
 
 					<form onSubmit={handleSubmit} className="space-y-4">
-						{/* Campo título - prominente con autofocus */}
 						<input
 							ref={titleInputRef}
 							type="text"
@@ -112,7 +138,6 @@ const CreateTaskModal = ({
 							className="w-full text-lg px-0 py-3 bg-transparent border-0 border-b border-border-muted focus:outline-none focus:border-primary placeholder-text-muted font-medium"
 						/>
 
-						{/* Descripción sin marco */}
 						<textarea
 							value={formData.description}
 							onChange={(e) =>
@@ -123,7 +148,6 @@ const CreateTaskModal = ({
 							className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder-text-muted resize-none"
 						/>
 
-						{/* Grid para status y priority */}
 						<div className="grid grid-cols-2 gap-3">
 							<select
 								value={formData.status}
@@ -156,7 +180,6 @@ const CreateTaskModal = ({
 							</select>
 						</div>
 
-						{/* Fecha sin marco */}
 						<input
 							type="datetime-local"
 							value={formData.dueDate}
@@ -166,7 +189,6 @@ const CreateTaskModal = ({
 							className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20"
 						/>
 
-						{/* Campos opcionales colapsables */}
 						<details className="group">
 							<summary className="cursor-pointer text-sm text-primary hover:text-primary/80 transition-colors py-2">
 								Más opciones
@@ -194,7 +216,6 @@ const CreateTaskModal = ({
 							</div>
 						</details>
 
-						{/* Botones de acción mejorados */}
 						<div className="flex gap-3 justify-end pt-6">
 							<button
 								type="button"
@@ -208,7 +229,7 @@ const CreateTaskModal = ({
 								disabled={!formData.title.trim()}
 								className="px-5 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
 							>
-								Crear tarea
+								{task ? "Editar tarea" : "Crear tarea"}
 							</button>
 						</div>
 					</form>
@@ -218,4 +239,4 @@ const CreateTaskModal = ({
 	);
 };
 
-export default CreateTaskModal;
+export default TaskModal;

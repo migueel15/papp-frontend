@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/features/auth/auth.hook";
 import CreateTaskBottomSheet from "./components/CreateTaskBottomSheet";
-import CreateTaskModal from "./components/CreateTaskModal";
+import TaskModal from "./components/CreateTaskModal";
 import EditTaskModal from "./components/EditTaskModal";
 import EditTaskBottomSheet from "./components/EditTaskBottomSheet";
 import FloatingActionButton from "./components/FloatingActionButton";
@@ -14,17 +14,17 @@ import TaskHeader from "./components/TaskHeader.tsx";
 
 const TaskPage = () => {
 	const tasks = useTask();
-	const [isDesktopModalOpen, setIsDesktopModalOpen] = useState(false);
-	const [isMobileBottomSheetOpen, setIsMobileBottomSheetOpen] = useState(false);
-	const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-	const [isEditBottomSheetOpen, setIsEditBottomSheetOpen] = useState(false);
+	const isMobile = window.innerWidth <= 768
+
+
+	const [isTaskModalOpen, setIsTaskModalOpen] = useState(false);
 	const [taskToEdit, setTaskToEdit] = useState<Task | undefined>(undefined);
 	const { user } = useAuth();
 
 	// Keyboard shortcut: "Q" para abrir modal de crear tarea
 	useKeyboardShortcut({
 		key: "q",
-		callback: () => setIsDesktopModalOpen(true),
+		callback: () => setIsTaskModalOpen(true),
 	});
 
 	if (tasks.isLoading) return <h1>Loading...</h1>;
@@ -46,7 +46,7 @@ const TaskPage = () => {
 			<div className="bg-bg-light rounded-lg drop-shadow-md overflow-hidden">
 				<TaskHeader
 					title={tasks.currentTaskSection}
-					onCreateTask={() => setIsDesktopModalOpen(true)}
+					onCreateTask={() => setIsTaskModalOpen(true)}
 					onFilterTask={tasks.updateTaskFilter}
 					labels={tasks.labels}
 				/>
@@ -56,63 +56,33 @@ const TaskPage = () => {
 					onDelete={tasks.delTask}
 					onEdit={(task) => {
 						setTaskToEdit(task);
-						// Desktop: usar modal, Mobile: usar bottom sheet
-						if (window.innerWidth >= 768) {
-							setIsEditModalOpen(true);
-						} else {
-							setIsEditBottomSheetOpen(true);
-						}
+						setIsTaskModalOpen(true)
 					}}
 				/>
 			</div>
 
 
-			{/* Modal para desktop */}
-			<CreateTaskModal
-				isOpen={isDesktopModalOpen}
-				onClose={() => setIsDesktopModalOpen(false)}
-				onSubmit={(taskData) => tasks.addTask(taskData, user?.id || "")}
-			/>
-
-			{/* Modal de edición para desktop */}
-			<EditTaskModal
-				isOpen={isEditModalOpen}
+			<TaskModal
+				isOpen={isTaskModalOpen}
+				isMobile={window.innerWidth <= 768}
+				task={taskToEdit}
 				onClose={() => {
-					setIsEditModalOpen(false);
-					setTaskToEdit(undefined);
+					if (taskToEdit) {
+						setTaskToEdit(undefined)
+					}
+					setIsTaskModalOpen(false)
 				}}
 				onSubmit={(taskData) => {
 					if (taskToEdit) {
 						tasks.editTask(taskToEdit.id, taskData);
+					} else {
+						tasks.addTask(taskData, user?.id || "")
 					}
+
 				}}
-				task={taskToEdit}
 			/>
 
-			{/* Bottom Sheet de edición para móvil */}
-			<EditTaskBottomSheet
-				isOpen={isEditBottomSheetOpen}
-				onClose={() => {
-					setIsEditBottomSheetOpen(false);
-					setTaskToEdit(undefined);
-				}}
-				onSubmit={(taskData) => {
-					if (taskToEdit) {
-						tasks.editTask(taskToEdit.id, taskData);
-					}
-				}}
-				task={taskToEdit}
-			/>
-
-			{/* Bottom Sheet para móvil */}
-			<CreateTaskBottomSheet
-				isOpen={isMobileBottomSheetOpen}
-				onClose={() => setIsMobileBottomSheetOpen(false)}
-				onSubmit={(taskData) => tasks.addTask(taskData, user?.id || "")}
-			/>
-
-			{/* Floating Action Button para móvil */}
-			<FloatingActionButton onClick={() => setIsMobileBottomSheetOpen(true)} />
+			<FloatingActionButton onClick={() => setIsTaskModalOpen(true)} />
 		</div>
 	);
 };
