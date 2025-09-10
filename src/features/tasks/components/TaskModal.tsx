@@ -16,10 +16,10 @@ const formatDateTimeForInput = (date: Date): string => {
 	return `${year}-${month}-${day}T${hours}:${minutes}`;
 };
 
-interface CreateTaskModalProps {
+interface TaskModalProps {
 	isOpen: boolean;
 	isMobile: boolean;
-	task: Task;
+	task?: Task;
 	onClose: () => void;
 	onSubmit: (
 		taskData: Omit<Task, "id" | "createdAt" | "updatedAt" | "userId">,
@@ -32,8 +32,7 @@ const TaskModal = ({
 	task,
 	onClose,
 	onSubmit,
-}: CreateTaskModalProps) => {
-
+}: TaskModalProps) => {
 	const [formData, setFormData] = useState({
 		title: "",
 		description: "",
@@ -99,15 +98,36 @@ const TaskModal = ({
 		>
 			<DialogBackdrop className="fixed inset-0 bg-black/30 backdrop-blur-[2px]" />
 
-			<div className={`fixed flex w-screen items-center justify-center p-4 ${isMobile ? "inset-x-0 bottom-0" : "inset-0"}`}>
-				<DialogPanel className="max-w-md w-full bg-bg-light rounded-xl p-6 shadow-2xl border border-border-muted/30">
-					<div className="flex items-center justify-between mb-6">
-						<DialogTitle className="text-lg font-semibold text-text">
+			<div
+				className={`fixed flex w-screen ${isMobile
+					? "inset-x-0 bottom-0"
+					: "inset-0 items-center justify-center p-4"
+					}`}
+			>
+				<DialogPanel
+					className={`w-full bg-bg-light shadow-2xl ${isMobile
+						? "rounded-t-2xl max-h-[85vh] overflow-y-auto transform transition-transform duration-300 ease-out data-[closed]:translate-y-full"
+						: "max-w-md rounded-xl p-6 border border-border-muted/30"
+						}`}
+				>
+					<div
+						className={`flex items-center justify-between ${isMobile
+							? "sticky top-0 bg-bg-light border-b border-border-muted px-6 py-4 rounded-t-2xl"
+							: "mb-6"
+							}`}
+					>
+						<DialogTitle
+							className={`text-lg text-text ${isMobile ? "font-bold" : "font-semibold"
+								}`}
+						>
 							{task ? "Editar tarea" : "Nueva tarea"}
 						</DialogTitle>
 						<button
 							onClick={handleClose}
-							className="p-1 rounded-md hover:bg-bg transition-colors text-text-muted hover:text-text"
+							className={`rounded-md transition-colors text-text-muted hover:text-text ${isMobile
+								? "p-2 -mr-2 rounded-full hover:bg-bg"
+								: "p-1 hover:bg-bg"
+								}`}
 						>
 							<svg
 								className="w-5 h-5"
@@ -125,7 +145,10 @@ const TaskModal = ({
 						</button>
 					</div>
 
-					<form onSubmit={handleSubmit} className="space-y-4">
+					<form
+						onSubmit={handleSubmit}
+						className={`space-y-4 ${isMobile ? "px-6 py-4 space-y-6" : ""}`}
+					>
 						<input
 							ref={titleInputRef}
 							type="text"
@@ -135,7 +158,9 @@ const TaskModal = ({
 							}
 							placeholder="¿Qué necesitas hacer?"
 							required
-							className="w-full text-lg px-0 py-3 bg-transparent border-0 border-b border-border-muted focus:outline-none focus:border-primary placeholder-text-muted font-medium"
+							className={`w-full bg-transparent border-0 border-b border-border-muted focus:outline-none focus:border-primary placeholder-text-muted ${isMobile ? "text-lg px-0 py-3" : "text-lg px-0 py-3 font-medium"
+								}`}
+							autoFocus={isMobile}
 						/>
 
 						<textarea
@@ -145,10 +170,15 @@ const TaskModal = ({
 							}
 							placeholder="Agregar descripción..."
 							rows={3}
-							className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder-text-muted resize-none"
+							className={`w-full placeholder-text-muted resize-none focus:outline-none ${isMobile
+								? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+								: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+								}`}
 						/>
 
-						<div className="grid grid-cols-2 gap-3">
+						<div
+							className={`grid grid-cols-2 gap-3 ${isMobile ? "gap-4" : ""}`}
+						>
 							<select
 								value={formData.status}
 								onChange={(e) =>
@@ -157,7 +187,10 @@ const TaskModal = ({
 										status: e.target.value as Task["status"],
 									})
 								}
-								className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20"
+								className={`w-full focus:outline-none ${isMobile
+									? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+									: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+									}`}
 							>
 								<option value="todo">📋 Por Hacer</option>
 								<option value="in_progress">⚡ En Progreso</option>
@@ -172,7 +205,10 @@ const TaskModal = ({
 										priority: e.target.value as Task["priority"],
 									})
 								}
-								className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20"
+								className={`w-full focus:outline-none ${isMobile
+									? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+									: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+									}`}
 							>
 								<option value="low">🟢 Prioridad Baja</option>
 								<option value="medium">🟡 Prioridad Media</option>
@@ -186,14 +222,23 @@ const TaskModal = ({
 							onChange={(e) =>
 								setFormData({ ...formData, dueDate: e.target.value })
 							}
-							className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20"
+							className={`w-full focus:outline-none ${isMobile
+								? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+								: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+								}`}
 						/>
 
 						<details className="group">
-							<summary className="cursor-pointer text-sm text-primary hover:text-primary/80 transition-colors py-2">
-								Más opciones
+							<summary
+								className={`cursor-pointer text-primary hover:text-primary/80 transition-colors py-2 ${isMobile ? "text-sm font-medium" : "text-sm"
+									}`}
+							>
+								{isMobile ? "📚 Más opciones" : "Más opciones"}
 							</summary>
-							<div className="mt-3 space-y-3 group-open:animate-fade-in">
+							<div
+								className={`mt-3 space-y-3 group-open:animate-fade-in ${isMobile ? "mt-4 space-y-4" : ""
+									}`}
+							>
 								<input
 									type="text"
 									value={formData.subject}
@@ -201,7 +246,10 @@ const TaskModal = ({
 										setFormData({ ...formData, subject: e.target.value })
 									}
 									placeholder="📚 Materia (ej. Matemáticas)"
-									className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder-text-muted"
+									className={`w-full placeholder-text-muted focus:outline-none ${isMobile
+										? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+										: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+										}`}
 								/>
 
 								<input
@@ -211,25 +259,45 @@ const TaskModal = ({
 										setFormData({ ...formData, campusId: e.target.value })
 									}
 									placeholder="🏫 Campus ID"
-									className="w-full px-4 py-3 bg-bg rounded-lg border-0 focus:outline-none focus:ring-2 focus:ring-primary/20 placeholder-text-muted"
+									className={`w-full placeholder-text-muted focus:outline-none ${isMobile
+										? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+										: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+										}`}
 								/>
 							</div>
 						</details>
 
-						<div className="flex gap-3 justify-end pt-6">
+						<div
+							className={`flex gap-3 ${isMobile
+								? "sticky bottom-0 bg-bg-light pt-4 -mx-6 px-6 pb-6"
+								: "justify-end pt-6"
+								}`}
+						>
 							<button
 								type="button"
 								onClick={handleClose}
-								className="px-5 py-2.5 text-text-muted hover:text-text transition-colors font-medium"
+								className={`font-medium transition-colors ${isMobile
+									? "flex-1 px-4 py-3 text-text-muted border border-border-muted rounded-md hover:bg-bg"
+									: "px-5 py-2.5 text-text-muted hover:text-text"
+									}`}
 							>
 								Cancelar
 							</button>
 							<button
 								type="submit"
 								disabled={!formData.title.trim()}
-								className="px-5 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+								className={`font-medium transition-colors disabled:opacity-50 disabled:cursor-not-allowed ${isMobile
+									? "flex-1 px-4 py-3 bg-primary text-white rounded-md hover:bg-primary/90"
+									: "px-5 py-2.5 bg-primary text-white rounded-lg hover:bg-primary/90 shadow-lg"
+									}`}
 							>
-								{task ? "Editar tarea" : "Crear tarea"}
+								{task
+									? isMobile
+										? "Guardar"
+										: "Editar tarea"
+									: isMobile
+										? "Crear Tarea"
+										: "Crear tarea"}
 							</button>
 						</div>
 					</form>

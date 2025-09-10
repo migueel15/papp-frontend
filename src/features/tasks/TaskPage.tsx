@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@/features/auth/auth.hook";
-import CreateTaskBottomSheet from "./components/CreateTaskBottomSheet";
-import TaskModal from "./components/CreateTaskModal";
-import EditTaskModal from "./components/EditTaskModal";
-import EditTaskBottomSheet from "./components/EditTaskBottomSheet";
+import TaskModal from "./components/TaskModal";
 import FloatingActionButton from "./components/FloatingActionButton";
 import TasksTable from "./components/TaskTable.tsx";
 import useKeyboardShortcut from "./hooks/useKeyboardShortcut";
