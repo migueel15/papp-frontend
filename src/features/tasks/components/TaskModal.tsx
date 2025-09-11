@@ -170,7 +170,7 @@ const TaskModal = ({
 						<input
 							value={formData.labels.map((l) => l.name)}
 							onChange={(e) => {
-								setFormData({ ...formData, labels: e.target.value.replace(" ", "").split(",").map((v) => { return { "name": v } }) })
+								setFormData({ ...formData, labels: e.target.value.replace(" ", "").split(",").map((v) => { return { name: v, color: "", id: "" } }) })
 							}}
 							placeholder="Agregar labels..."
 							className={`w-full placeholder-text-muted resize-none focus:outline-none ${isMobile
