@@ -5,7 +5,7 @@ import {
 	DialogTitle,
 } from "@headlessui/react";
 import { useEffect, useRef, useState } from "react";
-import type { Task } from "../models/task";
+import type { Label, Task } from "../models/task";
 
 const formatDateTimeForInput = (date: Date): string => {
 	const year = date.getFullYear();
@@ -41,6 +41,7 @@ const TaskModal = ({
 		dueDate: "",
 		campusId: "",
 		subject: "",
+		labels: [] as Label[]
 	});
 
 	useEffect(() => {
@@ -53,6 +54,7 @@ const TaskModal = ({
 				dueDate: task.dueDate ? formatDateTimeForInput(task.dueDate) : "",
 				campusId: task.campusId || "",
 				subject: task.subject || "",
+				labels: task.labels || []
 			});
 		}
 	}, [task, isOpen]);
@@ -70,6 +72,7 @@ const TaskModal = ({
 			dueDate: formData.dueDate ? new Date(formData.dueDate) : undefined,
 			campusId: formData.campusId || undefined,
 			subject: formData.subject || undefined,
+			labels: formData.labels || []
 		};
 
 		onSubmit(taskData);
@@ -85,6 +88,7 @@ const TaskModal = ({
 			dueDate: "",
 			campusId: "",
 			subject: "",
+			labels: []
 		});
 		onClose();
 	};
@@ -161,6 +165,18 @@ const TaskModal = ({
 							className={`w-full bg-transparent border-0 border-b border-border-muted focus:outline-none focus:border-primary placeholder-text-muted ${isMobile ? "text-lg px-0 py-3" : "text-lg px-0 py-3 font-medium"
 								}`}
 							autoFocus={isMobile}
+						/>
+
+						<input
+							value={formData.labels.map((l) => l.name)}
+							onChange={(e) => {
+								setFormData({ ...formData, labels: e.target.value.replace(" ", "").split(",").map((v) => { return { "name": v } }) })
+							}}
+							placeholder="Agregar labels..."
+							className={`w-full placeholder-text-muted resize-none focus:outline-none ${isMobile
+								? "px-3 py-3 bg-bg border border-border-muted rounded-md focus:ring-2 focus:ring-primary"
+								: "px-4 py-3 bg-bg rounded-lg border-0 focus:ring-2 focus:ring-primary/20"
+								}`}
 						/>
 
 						<textarea
